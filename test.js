@@ -68,7 +68,11 @@
             behavior: PW,
             category: 'powders',
             state: 'solid',
-            density: 1100
+            density: 1100,
+            reactions: {
+                cocaine: { elem1: 'crack_slurry', elem2: null, chance: 0.4 },
+                cocaine_solution: { elem1: 'crack_slurry', elem2: null, chance: 0.5 }
+            }
         },
         lime: {
             color: ['#f5f5f5', '#eeeeee'],
@@ -231,6 +235,7 @@
                 temp: cfg.temp,
                 tempHigh: cfg.tempHigh,
                 stateHigh: cfg.stateHigh,
+                reactions: cfg.reactions,
                 desc: cfg.desc || `${id} - base game element`
             };
         }
@@ -810,7 +815,7 @@
             tempLow: -5,
             stateLow: 'frozen_coke_solution',
             reactions: {
-                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 }
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.5 }
             },
             desc: 'Cocaine dissolved in water - for crack production'
         },
@@ -1437,7 +1442,7 @@
             stateHigh: 'smoke',
             reactions: {
                 water: { elem1: 'cocaine_solution', elem2: null, chance: 0.2 },
-                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 }
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.4 }
             },
             desc: 'Schedule II - Cocaine HCl - white powder'
         },
@@ -1885,7 +1890,16 @@
         elements.cocaine.reactions.baking_soda = { 
             elem1: 'crack_slurry', 
             elem2: null, 
-            chance: 0.35 
+            chance: 0.4 
+        };
+    }
+
+    // Add baking soda reaction to cocaine solution to make crack slurry
+    if (elements.cocaine_solution && elements.cocaine_solution.reactions) {
+        elements.cocaine_solution.reactions.baking_soda = { 
+            elem1: 'crack_slurry', 
+            elem2: null, 
+            chance: 0.5 
         };
     }
 
@@ -1914,6 +1928,7 @@
     console.log('✓ Knife cursor tool added for harvesting plants');
     console.log('✓ Blade cursor tool added as alternative');
     console.log('✓ Crack production: Cocaine + Baking Soda → Crack Slurry → Heat to 85°C → Crack');
+    console.log('✓ Crack production: Cocaine Solution + Baking Soda → Crack Slurry → Heat to 85°C → Crack');
     console.log('✓ Total research elements: 100+');
     console.log('✓ All seeds grow with: soil, wet_soil, mud, water, fertilizer at 15°C+');
     console.log('✓ All plants can be harvested with knife/blade cursor tools');
