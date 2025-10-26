@@ -182,6 +182,40 @@
             category: 'gases',
             state: 'gas',
             density: 0.8
+        },
+        tea: {
+            color: ['#8d6e63', '#795548'],
+            behavior: LIQ,
+            category: 'liquids',
+            state: 'liquid',
+            density: 1005,
+            tempHigh: 100,
+            stateHigh: 'steam',
+            desc: 'Tea - contains caffeine'
+        },
+        salt: {
+            color: ['#ffffff', '#f5f5f5'],
+            behavior: PW,
+            category: 'powders',
+            state: 'solid',
+            density: 1200,
+            desc: 'Salt - sodium chloride'
+        },
+        sugar: {
+            color: ['#ffffff', '#f5f5f5'],
+            behavior: PW,
+            category: 'powders',
+            state: 'solid',
+            density: 1100,
+            desc: 'Sugar - sucrose'
+        },
+        dirt: {
+            color: ['#8d6e63', '#795548'],
+            behavior: PW,
+            category: 'land',
+            state: 'solid',
+            density: 1300,
+            desc: 'Dirt - soil material'
         }
     };
 
@@ -1140,16 +1174,6 @@
     // 11. ADD MISSING BASE ELEMENTS FOR REACTIONS
     // --------------------------------------------------------------------------
     const additionalBaseElements = {
-        tea: {
-            color: ['#8d6e63', '#795548'],
-            behavior: LIQ,
-            category: 'liquids',
-            state: 'liquid',
-            density: 1005,
-            tempHigh: 100,
-            stateHigh: 'steam',
-            desc: 'Tea - contains caffeine'
-        },
         cocoa: {
             color: ['#8d6e63', '#795548'],
             behavior: PW,
@@ -1412,6 +1436,11 @@
             density: 1200,
             tempHigh: 195,
             stateHigh: 'smoke',
+            reactions: {
+                water: { elem1: 'cocaine_solution', elem2: null, chance: 0.2 },
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 },
+                sodium_hydroxide: { elem1: 'crack_slurry', elem2: null, chance: 0.3 }
+            },
             desc: 'Schedule II - Cocaine HCl - white powder'
         },
         crack: {
@@ -1422,6 +1451,9 @@
             density: 1150,
             tempHigh: 98,
             stateHigh: 'crack_smoke',
+            reactions: {
+                hydrochloric_acid: { elem1: 'cocaine', elem2: null, chance: 0.4 }
+            },
             desc: 'Schedule II - Crack cocaine - smokable freebase'
         },
         methamphetamine: {
@@ -1432,6 +1464,9 @@
             density: 1180,
             tempHigh: 170,
             stateHigh: 'meth_smoke',
+            reactions: {
+                water: { elem1: 'meth_solution', elem2: null, chance: 0.2 }
+            },
             desc: 'Schedule II - Methamphetamine - crystal'
         },
         amphetamine: {
@@ -1452,6 +1487,9 @@
             density: 1200,
             tempHigh: 148,
             stateHigh: 'mdma_smoke',
+            reactions: {
+                water: { elem1: 'mdma_solution', elem2: null, chance: 0.2 }
+            },
             desc: 'Schedule I - MDMA - ecstasy/molly'
         },
         heroin: {
@@ -1462,6 +1500,9 @@
             density: 1350,
             tempHigh: 173,
             stateHigh: 'heroin_smoke',
+            reactions: {
+                water: { elem1: 'heroin_solution', elem2: null, chance: 0.15 }
+            },
             desc: 'Schedule I - Heroin - diacetylmorphine'
         },
         morphine: {
@@ -1472,6 +1513,10 @@
             density: 1320,
             tempHigh: 255,
             stateHigh: 'morphine_smoke',
+            reactions: {
+                water: { elem1: 'opium_solution', elem2: null, chance: 0.1 },
+                acetic_anhydride: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.35, tempMin: 85 }
+            },
             desc: 'Schedule II - Morphine - opiate analgesic'
         },
         fentanyl: {
@@ -1575,6 +1620,64 @@
             tempHigh: 204,
             stateHigh: 'steam',
             desc: 'Schedule I - GBL - GHB prodrug'
+        },
+        mescaline: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1290,
+            tempHigh: 183,
+            stateHigh: 'smoke',
+            desc: 'Schedule I - Mescaline - cactus alkaloid'
+        },
+        cathinone: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1190,
+            tempHigh: 220,
+            stateHigh: 'smoke',
+            desc: 'Cathinone - stimulant from khat plant'
+        },
+        mitragynine: {
+            color: ['#8d6e63', '#795548'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1250,
+            tempHigh: 240,
+            stateHigh: 'smoke',
+            desc: 'Mitragynine - primary alkaloid in kratom'
+        },
+        scrap_metal: {
+            color: ['#757575', '#616161'],
+            behavior: PW,
+            category: 'solids',
+            state: 'solid',
+            density: 4500,
+            desc: 'Scrap metal - broken tool fragments'
+        },
+        molten_steel: {
+            color: ['#ff5252', '#ff1744', '#d50000'],
+            behavior: LIQ,
+            category: 'liquids',
+            state: 'liquid',
+            density: 7000,
+            viscosity: 8000,
+            temp: 1600,
+            tempLow: 1510,
+            stateLow: 'steel',
+            desc: 'Molten steel - liquid metal'
+        },
+        steel: {
+            color: ['#9e9e9e', '#757575'],
+            behavior: behaviors.WALL,
+            category: 'solids',
+            state: 'solid',
+            density: 7850,
+            desc: 'Steel - strong metal alloy'
         }
     };
 
@@ -1591,6 +1694,8 @@
                 stateHigh: cfg.stateHigh,
                 tempLow: cfg.tempLow,
                 stateLow: cfg.stateLow,
+                temp: cfg.temp,
+                reactions: cfg.reactions,
                 desc: cfg.desc
             };
         }
@@ -1746,91 +1851,6 @@
             breakInto: 'scrap_metal',
             tool: elements.knife.tool, // Same tool function as knife
             desc: 'Blade tool - alternative harvesting tool with same functionality as knife'
-        };
-    }
-
-    // Add missing elements needed for knife tool
-    const knifeReactionElements = {
-        cathinone: {
-            color: ['#ffffff', '#fafafa'],
-            behavior: PW,
-            category: 'research_compounds',
-            state: 'solid',
-            density: 1190,
-            tempHigh: 220,
-            stateHigh: 'smoke',
-            desc: 'Cathinone - stimulant from khat plant'
-        },
-        mitragynine: {
-            color: ['#8d6e63', '#795548'],
-            behavior: PW,
-            category: 'research_compounds',
-            state: 'solid',
-            density: 1250,
-            tempHigh: 240,
-            stateHigh: 'smoke',
-            desc: 'Mitragynine - primary alkaloid in kratom'
-        },
-        scrap_metal: {
-            color: ['#757575', '#616161'],
-            behavior: PW,
-            category: 'solids',
-            state: 'solid',
-            density: 4500,
-            desc: 'Scrap metal - broken tool fragments'
-        },
-        molten_steel: {
-            color: ['#ff5252', '#ff1744', '#d50000'],
-            behavior: LIQ,
-            category: 'liquids',
-            state: 'liquid',
-            density: 7000,
-            viscosity: 8000,
-            temp: 1600,
-            tempLow: 1510,
-            stateLow: 'steel',
-            desc: 'Molten steel - liquid metal'
-        },
-        steel: {
-            color: ['#9e9e9e', '#757575'],
-            behavior: behaviors.WALL,
-            category: 'solids',
-            state: 'solid',
-            density: 7850,
-            desc: 'Steel - strong metal alloy'
-        }
-    };
-
-    Object.entries(knifeReactionElements).forEach(([id, cfg]) => {
-        if (!elements[id]) {
-            elements[id] = {
-                color: cfg.color,
-                behavior: cfg.behavior,
-                category: cfg.category,
-                state: cfg.state,
-                density: cfg.density,
-                viscosity: cfg.viscosity,
-                tempHigh: cfg.tempHigh,
-                stateHigh: cfg.stateHigh,
-                tempLow: cfg.tempLow,
-                stateLow: cfg.stateLow,
-                temp: cfg.temp,
-                desc: cfg.desc
-            };
-        }
-    });
-
-    // Add mescaline if missing
-    if (!elements.mescaline) {
-        elements.mescaline = {
-            color: ['#ffffff', '#fafafa'],
-            behavior: PW,
-            category: 'research_compounds',
-            state: 'solid',
-            density: 1290,
-            tempHigh: 183,
-            stateHigh: 'smoke',
-            desc: 'Schedule I - Mescaline - cactus alkaloid'
         };
     }
 
