@@ -810,8 +810,7 @@
             tempLow: -5,
             stateLow: 'frozen_coke_solution',
             reactions: {
-                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 },
-                sodium_hydroxide: { elem1: 'crack_slurry', elem2: null, chance: 0.3 }
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 }
             },
             desc: 'Cocaine dissolved in water - for crack production'
         },
@@ -1438,8 +1437,7 @@
             stateHigh: 'smoke',
             reactions: {
                 water: { elem1: 'cocaine_solution', elem2: null, chance: 0.2 },
-                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 },
-                sodium_hydroxide: { elem1: 'crack_slurry', elem2: null, chance: 0.3 }
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 }
             },
             desc: 'Schedule II - Cocaine HCl - white powder'
         },
@@ -1880,7 +1878,25 @@
     }
 
     // --------------------------------------------------------------------------
-    // 15. COMPLETION & DEBUG
+    // 15. FIXED CRACK PRODUCTION METHOD
+    // --------------------------------------------------------------------------
+    // Add baking soda reaction to cocaine to make crack slurry
+    if (elements.cocaine && elements.cocaine.reactions) {
+        elements.cocaine.reactions.baking_soda = { 
+            elem1: 'crack_slurry', 
+            elem2: null, 
+            chance: 0.35 
+        };
+    }
+
+    // Make sure crack slurry converts to crack when heated
+    if (elements.crack_slurry) {
+        elements.crack_slurry.tempHigh = 85;
+        elements.crack_slurry.stateHigh = 'crack';
+    }
+
+    // --------------------------------------------------------------------------
+    // 16. COMPLETION & DEBUG
     // --------------------------------------------------------------------------
     console.log('✓ ChemResearch v2 COMPLETE - ALL ELEMENTS LOADED');
     console.log('✓ Base game elements: 20+ (soil, water, chemicals, etc.)');
@@ -1897,6 +1913,7 @@
     console.log('✓ Smoke/vapor states: 10+');
     console.log('✓ Knife cursor tool added for harvesting plants');
     console.log('✓ Blade cursor tool added as alternative');
+    console.log('✓ Crack production: Cocaine + Baking Soda → Crack Slurry → Heat to 85°C → Crack');
     console.log('✓ Total research elements: 100+');
     console.log('✓ All seeds grow with: soil, wet_soil, mud, water, fertilizer at 15°C+');
     console.log('✓ All plants can be harvested with knife/blade cursor tools');
