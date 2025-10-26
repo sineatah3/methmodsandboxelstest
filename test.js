@@ -8,19 +8,6 @@
     'use strict';
 
     // --------------------------------------------------------------------------
-    // 0. ON-LOAD DISCLAIMER
-    // --------------------------------------------------------------------------
-    if (typeof window !== 'undefined') {
-        window.addEventListener('load', () => {
-            alert(
-                'CHEMRESEARCH_V2 COMPLETE – EDUCATIONAL MOD\n' +
-                'Simulates real-world chemistry including controlled substances.\n' +
-                'No real-world instructions are provided. Use responsibly.'
-            );
-        });
-    }
-
-    // --------------------------------------------------------------------------
     // 1. HELPERS & BEHAVIORS
     // --------------------------------------------------------------------------
     const PW = behaviors.POWDER;
@@ -1670,16 +1657,12 @@
     }
 
     // --------------------------------------------------------------------------
-    // 13. KNIFE TOOL FOR HARVESTING
+    // 13. KNIFE TOOL FOR HARVESTING (CURSOR-BASED)
     // --------------------------------------------------------------------------
     if (!elements.knife) {
         elements.knife = {
             color: ['#9e9e9e', '#757575', '#616161'],
-            behavior: [
-                'XX|CR:blade%2|XX',
-                'CR:blade%2|XX|CR:blade%2',
-                'XX|CR:blade%2|XX'
-            ],
+            behavior: behaviors.CURSOR,
             category: 'tools',
             state: 'solid',
             density: 7850,
@@ -1688,45 +1671,71 @@
             stateHigh: 'molten_steel',
             hardness: 0.9,
             breakInto: 'scrap_metal',
-            reactions: {
-                // Harvest cannabis plants
-                cannabis_sativa: { elem1: 'cannabis_flower', elem2: 'plant_matter', chance: 0.8 },
-                cannabis_indica: { elem1: 'cannabis_flower', elem2: 'plant_matter', chance: 0.8 },
-                cannabis_ruderalis: { elem1: 'cannabis_flower', elem2: 'plant_matter', chance: 0.8 },
-                
-                // Harvest coca plants
-                coca_boliviana: { elem1: 'coca_leaves', elem2: 'plant_matter', chance: 0.7 },
-                coca_colombiana: { elem1: 'coca_leaves', elem2: 'plant_matter', chance: 0.7 },
-                
-                // Harvest opium poppy
-                papaver_somniferum: { elem1: 'opium_latex', elem2: 'plant_matter', chance: 0.6 },
-                
-                // Process cannabis flower into trichomes
-                cannabis_flower: { elem1: 'cannabis_trichomes', elem2: 'plant_matter', chance: 0.5 },
-                
-                // Process coca leaves into alkaloids
-                coca_leaves: { elem1: 'coca_alkaloids', elem2: 'plant_matter', chance: 0.4 },
-                
-                // General plant processing
-                ephedra_sinica: { elem1: 'ephedrine', elem2: 'plant_matter', chance: 0.3 },
-                khat: { elem1: 'cathinone', elem2: 'plant_matter', chance: 0.3 },
-                kratom: { elem1: 'mitragynine', elem2: 'plant_matter', chance: 0.3 },
-                tobacco: { elem1: 'nicotine', elem2: 'plant_matter', chance: 0.4 },
-                coffee: { elem1: 'caffeine', elem2: 'plant_matter', chance: 0.3 }
+            // Cursor tool properties
+            tool: function(pixel) {
+                // Define what happens when knife tool is used on different elements
+                if (pixel.element === 'papaver_somniferum') {
+                    changePixel(pixel, 'opium_latex');
+                }
+                else if (pixel.element === 'cannabis_sativa' || pixel.element === 'cannabis_indica' || pixel.element === 'cannabis_ruderalis') {
+                    changePixel(pixel, 'cannabis_flower');
+                }
+                else if (pixel.element === 'coca_boliviana' || pixel.element === 'coca_colombiana') {
+                    changePixel(pixel, 'coca_leaves');
+                }
+                else if (pixel.element === 'cannabis_flower') {
+                    changePixel(pixel, 'cannabis_trichomes');
+                }
+                else if (pixel.element === 'coca_leaves') {
+                    changePixel(pixel, 'coca_alkaloids');
+                }
+                else if (pixel.element === 'ephedra_sinica') {
+                    changePixel(pixel, 'ephedrine');
+                }
+                else if (pixel.element === 'khat') {
+                    changePixel(pixel, 'cathinone');
+                }
+                else if (pixel.element === 'kratom') {
+                    changePixel(pixel, 'mitragynine');
+                }
+                else if (pixel.element === 'tobacco') {
+                    changePixel(pixel, 'nicotine');
+                }
+                else if (pixel.element === 'coffee') {
+                    changePixel(pixel, 'caffeine');
+                }
+                else if (pixel.element === 'psilocybe_cubensis') {
+                    changePixel(pixel, 'psilocybin');
+                }
+                else if (pixel.element === 'peyote') {
+                    changePixel(pixel, 'mescaline');
+                }
+                else if (pixel.element === 'salvia_divinorum') {
+                    changePixel(pixel, 'salvinorin_a');
+                }
+                else if (pixel.element === 'iboga') {
+                    changePixel(pixel, 'ibogaine');
+                }
+                else if (pixel.element === 'banisteriopsis_caapi') {
+                    changePixel(pixel, 'ayahuasca_brew');
+                }
+                else if (pixel.element === 'psychotria') {
+                    changePixel(pixel, 'dmt');
+                }
+                else if (pixel.element === 'morning_glory') {
+                    changePixel(pixel, 'lsa');
+                }
+                // No return value = no text displayed
             },
-            desc: 'Knife tool - used to harvest plants and process botanical materials'
+            desc: 'Knife tool - click on plants to harvest them (cursor-based tool)'
         };
     }
 
-    // Add blade as an alternative to knife
+    // Add blade as an alternative cursor tool
     if (!elements.blade) {
         elements.blade = {
             color: ['#bdbdbd', '#9e9e9e', '#e0e0e0'],
-            behavior: [
-                'XX|CR:knife%2|XX',
-                'CR:knife%2|XX|CR:knife%2',
-                'XX|CR:knife%2|XX'
-            ],
+            behavior: behaviors.CURSOR,
             category: 'tools',
             state: 'solid',
             density: 7850,
@@ -1735,12 +1744,12 @@
             stateHigh: 'molten_steel',
             hardness: 0.9,
             breakInto: 'scrap_metal',
-            reactions: elements.knife.reactions, // Same reactions as knife
+            tool: elements.knife.tool, // Same tool function as knife
             desc: 'Blade tool - alternative harvesting tool with same functionality as knife'
         };
     }
 
-    // Add missing elements needed for knife reactions
+    // Add missing elements needed for knife tool
     const knifeReactionElements = {
         cathinone: {
             color: ['#ffffff', '#fafafa'],
@@ -1811,9 +1820,24 @@
         }
     });
 
+    // Add mescaline if missing
+    if (!elements.mescaline) {
+        elements.mescaline = {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1290,
+            tempHigh: 183,
+            stateHigh: 'smoke',
+            desc: 'Schedule I - Mescaline - cactus alkaloid'
+        };
+    }
+
     // --------------------------------------------------------------------------
-    // 14. ADD SYNTHESIS REACTIONS TO EXISTING PLANTS
+    // 14. ADD SYNTHESIS REACTIONS TO EXISTING PLANTS (FOR AUTOMATIC PROCESSING)
     // --------------------------------------------------------------------------
+    // Keep these reactions for automatic processing alongside the cursor tool
     if (elements.banisteriopsis_caapi) {
         elements.banisteriopsis_caapi.reactions = {
             water: { elem1: 'ayahuasca_brew', elem2: null, chance: 0.15, tempMin: 80 },
@@ -1835,83 +1859,6 @@
         };
     }
 
-    if (elements.papaver_somniferum) {
-        elements.papaver_somniferum.reactions = {
-            knife: { elem1: 'opium_latex', elem2: null, chance: 0.3 },
-            blade: { elem1: 'opium_latex', elem2: null, chance: 0.3 }
-        };
-    }
-
-    if (elements.cannabis_sativa) {
-        elements.cannabis_sativa.reactions = {
-            knife: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 },
-            blade: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 }
-        };
-    }
-
-    if (elements.cannabis_indica) {
-        elements.cannabis_indica.reactions = {
-            knife: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 },
-            blade: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 }
-        };
-    }
-
-    if (elements.cannabis_ruderalis) {
-        elements.cannabis_ruderalis.reactions = {
-            knife: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 },
-            blade: { elem1: 'cannabis_flower', elem2: null, chance: 0.4 }
-        };
-    }
-
-    if (elements.coca_boliviana) {
-        elements.coca_boliviana.reactions = {
-            knife: { elem1: 'coca_leaves', elem2: null, chance: 0.4 },
-            blade: { elem1: 'coca_leaves', elem2: null, chance: 0.4 }
-        };
-    }
-
-    if (elements.coca_colombiana) {
-        elements.coca_colombiana.reactions = {
-            knife: { elem1: 'coca_leaves', elem2: null, chance: 0.4 },
-            blade: { elem1: 'coca_leaves', elem2: null, chance: 0.4 }
-        };
-    }
-
-    if (elements.psilocybe_cubensis) {
-        elements.psilocybe_cubensis.reactions = {
-            water: { elem1: 'psilocybin_tea', elem2: null, chance: 0.2, tempMin: 70 },
-            ethanol: { elem1: 'psilocybin', elem2: null, chance: 0.15, tempMin: 60 }
-        };
-    }
-
-    if (elements.peyote) {
-        elements.peyote.reactions = {
-            water: { elem1: 'mescaline_tea', elem2: null, chance: 0.18, tempMin: 75 },
-            ethanol: { elem1: 'mescaline', elem2: null, chance: 0.14, tempMin: 65 }
-        };
-    }
-
-    if (elements.ephedra_sinica) {
-        elements.ephedra_sinica.reactions = {
-            water: { elem1: 'ephedrine', elem2: null, chance: 0.12, tempMin: 85 },
-            ethanol: { elem1: 'ephedrine', elem2: null, chance: 0.15, tempMin: 70 }
-        };
-    }
-
-    // Add mescaline if missing
-    if (!elements.mescaline) {
-        elements.mescaline = {
-            color: ['#ffffff', '#fafafa'],
-            behavior: PW,
-            category: 'research_compounds',
-            state: 'solid',
-            density: 1290,
-            tempHigh: 183,
-            stateHigh: 'smoke',
-            desc: 'Schedule I - Mescaline - cactus alkaloid'
-        };
-    }
-
     // --------------------------------------------------------------------------
     // 15. COMPLETION & DEBUG
     // --------------------------------------------------------------------------
@@ -1928,11 +1875,11 @@
     console.log('✓ Final compounds: 15+ (cocaine, meth, heroin, etc.)');
     console.log('✓ Frozen states: ' + essentialFrozenStates.length);
     console.log('✓ Smoke/vapor states: 10+');
-    console.log('✓ Knife tool added for harvesting plants');
-    console.log('✓ Blade tool added as alternative');
+    console.log('✓ Knife cursor tool added for harvesting plants');
+    console.log('✓ Blade cursor tool added as alternative');
     console.log('✓ Total research elements: 100+');
     console.log('✓ All seeds grow with: soil, wet_soil, mud, water, fertilizer at 15°C+');
-    console.log('✓ All plants can be harvested with knife/blade');
+    console.log('✓ All plants can be harvested with knife/blade cursor tools');
     console.log('✓ Complete synthesis chains from plants to final products');
     console.log('✓ Universal precursor can create all elements');
     
