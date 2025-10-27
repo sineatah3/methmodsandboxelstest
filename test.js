@@ -1289,7 +1289,7 @@
             category: 'research_compounds',
             state: 'solid',
             density: 1150,
-            tempHigh: 98,
+            tempHigh: 200,
             stateHigh: 'crack_smoke',
             desc: 'Schedule II - Crack cocaine'
         },
