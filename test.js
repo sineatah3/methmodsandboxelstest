@@ -344,10 +344,13 @@
                 state: cfg.state,
                 density: cfg.density,
                 viscosity: cfg.viscosity,
-                tempHigh: cfg.tempHigh,
+                tempHigh: cfg.tempHigh ? cfg.tempHigh + 100 : undefined, // INCREASED by 100°C if defined
                 stateHigh: cfg.stateHigh,
                 tempLow: cfg.tempLow,
                 stateLow: cfg.stateLow,
+                burn: 0, // DISABLED burning for all reagents
+                burnTime: 0,
+                conduct: 0.03, // REDUCED heat transfer
                 desc: cfg.desc
             };
         }
@@ -510,12 +513,13 @@
             category: 'botanicals',
             tempHigh: cfg.tempHigh,
             stateHigh: 'ash',
-            burn: cfg.burn,
-            burnTime: cfg.burnTime,
+            burn: 5, // REDUCED from 60-75 to 5
+            burnTime: 800, // INCREASED from 280-400 to 800
+            burnInto: 'ash', // Changed from breakInto to burnInto
             breakInto: cfg.seed,
             state: 'solid',
             density: 800,
-            conduct: 0.1,
+            conduct: 0.05, // REDUCED from 0.1 to slow heat transfer
             desc: cfg.desc + ' - Research use only.'
         };
 
@@ -524,12 +528,15 @@
             color: ['#8d6e63', '#795548', '#a1887f', '#6d4c41'],
             behavior: PW,
             category: 'botanicals',
-            tempHigh: 200,
+            tempHigh: 300, // INCREASED from 200 to 300
             stateHigh: 'ash',
             tempLow: -20,
             stateLow: 'frozen_seed',
             state: 'solid',
             density: 1100,
+            burn: 0, // DISABLED burning
+            burnTime: 0,
+            conduct: 0.05, // REDUCED heat transfer
             reactions: {
                 soil: { elem1: plant, elem2: null, chance: 0.04, tempMin: 15 },
                 wet_soil: { elem1: plant, elem2: null, chance: 0.06, tempMin: 15 },
@@ -838,9 +845,11 @@
             state: cfg.liquid ? 'liquid' : 'solid',
             density: cfg.density,
             viscosity: cfg.viscosity,
-            tempHigh: cfg.tempHigh,
+            tempHigh: cfg.tempHigh + 100, // INCREASED by 100°C to prevent premature vaporization
             stateHigh: cfg.stateHigh,
-            conduct: 0.1,
+            burn: 0, // DISABLED burning for all precursors
+            burnTime: 0,
+            conduct: 0.03, // REDUCED heat transfer
             reactions: cfg.reactions,
             desc: cfg.desc
         };
@@ -961,9 +970,11 @@
             state: cfg.state,
             density: cfg.density,
             viscosity: cfg.viscosity,
-            tempHigh: cfg.tempHigh,
+            tempHigh: cfg.tempHigh + 100, // INCREASED by 100°C
             stateHigh: cfg.stateHigh,
-            conduct: 0.1,
+            burn: 0, // DISABLED burning
+            burnTime: 0,
+            conduct: 0.03, // REDUCED heat transfer
             reactions: cfg.reactions,
             desc: cfg.desc
         };
@@ -1113,11 +1124,11 @@
             state: cfg.state,
             density: cfg.density,
             viscosity: cfg.viscosity,
-            tempHigh: cfg.tempHigh,
+            tempHigh: cfg.tempHigh + 80, // INCREASED by 80°C
             stateHigh: cfg.stateHigh,
-            conduct: cfg.conduct || 0.1,
-            burn: cfg.burn,
-            burnTime: cfg.burnTime,
+            conduct: 0.03, // REDUCED heat transfer
+            burn: cfg.burn ? 3 : 0, // REDUCED burn chance from 60-65 to 3
+            burnTime: cfg.burnTime ? 1000 : 0, // INCREASED burn time to 1000
             breakInto: cfg.breakInto,
             reactions: cfg.reactions,
             desc: cfg.desc
@@ -1840,10 +1851,11 @@
                 state: cfg.state,
                 density: cfg.density,
                 viscosity: cfg.viscosity,
-                tempHigh: cfg.tempHigh,
+                tempHigh: cfg.tempHigh + 150, // INCREASED by 150°C to prevent accidental vaporization
                 stateHigh: cfg.stateHigh,
-                burn: cfg.burn,
-                burnTime: cfg.burnTime,
+                burn: 0, // DISABLED - these should NEVER burn
+                burnTime: 0,
+                conduct: 0.02, // VERY LOW heat transfer
                 reactions: cfg.reactions,
                 desc: cfg.desc
             };
@@ -2241,6 +2253,17 @@
     // --------------------------------------------------------------------------
     // 18. COMPLETION LOG
     // --------------------------------------------------------------------------
+    console.log('🔥 BURN PROTECTION ENABLED:');
+    console.log('  ✓ All final compounds: burn disabled, +150°C tempHigh');
+    console.log('  ✓ All precursors: burn disabled, +100°C tempHigh');
+    console.log('  ✓ All intermediates: burn disabled, +100°C tempHigh');
+    console.log('  ✓ All reagents: burn disabled, +100°C tempHigh');
+    console.log('  ✓ Botanical products: burn reduced to 3%, +80°C tempHigh');
+    console.log('  ✓ Plants: burn reduced from 60-75% to 5%');
+    console.log('  ✓ Seeds: burn completely disabled');
+    console.log('  ✓ Heat conductivity reduced: 0.1 → 0.02-0.05');
+    console.log('  → Elements are now MUCH more resistant to fire and heat!');
+    console.log('');
     console.log('='.repeat(80));
     console.log('✓ ChemResearch v3.0 MASSIVELY EXPANDED - 300+ ELEMENTS');
     console.log('='.repeat(80));
