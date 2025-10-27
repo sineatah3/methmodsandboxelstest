@@ -1,6 +1,7 @@
 // ============================================================================
 // CHEMRESEARCH_V2_COMPLETE_FIXED.JS – Educational Chemistry with ALL Elements
 // MIT Licence – Research / EDU Use Only – No Real-World Instructions
+// VERSION 1.1 - Includes burn behavior fixes for all compounds
 // ============================================================================
 /* global elements, behaviors, pixel, settings, changePixel */
 
@@ -1120,7 +1121,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 9. SOLUTIONS & EXTRACTS
+    // 9. SOLUTIONS & EXTRACTS - FIXED
     // --------------------------------------------------------------------------
     const solutions = {
         cocaine_solution: {
@@ -1134,6 +1135,8 @@
             stateHigh: ['cocaine', 'steam'],
             tempLow: -5,
             stateLow: 'frozen_coke_solution',
+            burn: 0, // FIX: Prevent burning to ensure cocaine precipitates
+            burnTime: 0,
             reactions: {
                 baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.35 },
                 sodium_hydroxide: { elem1: 'crack_slurry', elem2: null, chance: 0.3 }
@@ -1150,6 +1153,8 @@
             tempHigh: 85,
             stateHigh: 'crack',
             temp: 20,
+            burn: 0, // FIX: Prevent burning to ensure crack forms
+            burnTime: 0,
             desc: 'Cocaine + NaHCO₃ slurry - Heat to 85°C'
         },
         meth_solution: {
@@ -1161,6 +1166,8 @@
             density: 1020,
             tempHigh: 100,
             stateHigh: ['methamphetamine', 'steam'],
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'Methamphetamine solution'
         },
         mdma_solution: {
@@ -1172,6 +1179,8 @@
             density: 1015,
             tempHigh: 100,
             stateHigh: ['mdma', 'steam'],
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'MDMA solution'
         },
         heroin_solution: {
@@ -1183,6 +1192,8 @@
             density: 1040,
             tempHigh: 100,
             stateHigh: ['heroin_base', 'steam'],
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'Heroin dissolved in water'
         },
         opium_solution: {
@@ -1194,6 +1205,8 @@
             density: 1050,
             tempHigh: 100,
             stateHigh: ['opium_latex', 'steam'],
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             reactions: {
                 lime: { elem1: 'morphine_base', elem2: null, chance: 0.25, tempMin: 80 },
                 ammonium_hydroxide: { elem1: 'morphine_base', elem2: null, chance: 0.22, tempMin: 80 }
@@ -1209,6 +1222,8 @@
             density: 1020,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'Psilocybin mushroom tea'
         },
         mescaline_tea: {
@@ -1220,6 +1235,8 @@
             density: 1020,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'Mescaline tea'
         },
         lsa_solution: {
@@ -1231,6 +1248,8 @@
             density: 1010,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'LSA solution'
         },
         nicotine_solution: {
@@ -1242,6 +1261,8 @@
             density: 1005,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, // FIX: Prevent burning
+            burnTime: 0,
             desc: 'Nicotine solution'
         }
     };
@@ -1259,13 +1280,15 @@
             tempLow: cfg.tempLow,
             stateLow: cfg.stateLow,
             temp: cfg.temp,
+            burn: cfg.burn,
+            burnTime: cfg.burnTime,
             reactions: cfg.reactions,
             desc: cfg.desc
         };
     });
 
     // --------------------------------------------------------------------------
-    // 10. FINAL COMPOUNDS (WITH ALL FIXED REACTIONS)
+    // 10. FINAL COMPOUNDS (WITH ALL FIXED REACTIONS & BURN BEHAVIOR)
     // --------------------------------------------------------------------------
     const finalCompounds = {
         cocaine: {
@@ -1276,6 +1299,7 @@
             density: 1200,
             tempHigh: 195,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'cocaine_solution', elem2: null, chance: 0.2 },
                 baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.25 },
@@ -1289,8 +1313,9 @@
             category: 'research_compounds',
             state: 'solid',
             density: 1150,
-            tempHigh: 200,
+            tempHigh: 98,
             stateHigh: 'crack_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule II - Crack cocaine'
         },
         methamphetamine: {
@@ -1301,6 +1326,7 @@
             density: 1180,
             tempHigh: 170,
             stateHigh: 'meth_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'meth_solution', elem2: null, chance: 0.2 }
             },
@@ -1314,6 +1340,7 @@
             density: 1150,
             tempHigh: 200,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule II - Amphetamine'
         },
         mdma: {
@@ -1324,6 +1351,7 @@
             density: 1200,
             tempHigh: 148,
             stateHigh: 'mdma_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'mdma_solution', elem2: null, chance: 0.2 }
             },
@@ -1337,6 +1365,7 @@
             density: 1350,
             tempHigh: 173,
             stateHigh: 'heroin_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'heroin_solution', elem2: null, chance: 0.2 }
             },
@@ -1350,6 +1379,7 @@
             density: 1320,
             tempHigh: 255,
             stateHigh: 'morphine_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 acetic_anhydride: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.3, tempMin: 85 }
             },
@@ -1363,6 +1393,7 @@
             density: 1280,
             tempHigh: 220,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'psilocybin_tea', elem2: null, chance: 0.15, tempMin: 80 }
             },
@@ -1376,6 +1407,7 @@
             density: 1270,
             tempHigh: 173,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 psilocybin: { elem1: 'psilocin', elem2: null, chance: 0.2, tempMin: 70 }
             },
@@ -1389,6 +1421,7 @@
             density: 1290,
             tempHigh: 183,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 water: { elem1: 'mescaline_tea', elem2: null, chance: 0.15, tempMin: 80 }
             },
@@ -1402,6 +1435,7 @@
             density: 1300,
             tempHigh: 83,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - LSD'
         },
         dmt: {
@@ -1412,6 +1446,7 @@
             density: 1200,
             tempHigh: 160,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - DMT'
         },
         fentanyl: {
@@ -1422,6 +1457,7 @@
             density: 1400,
             tempHigh: 87,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule II - Fentanyl'
         },
         carfentanil: {
@@ -1432,6 +1468,7 @@
             density: 1420,
             tempHigh: 91,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule II - Carfentanil'
         },
         pcp: {
@@ -1442,6 +1479,7 @@
             density: 1240,
             tempHigh: 233,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule II - PCP'
         },
         ketamine: {
@@ -1452,6 +1490,7 @@
             density: 1250,
             tempHigh: 262,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule III - Ketamine'
         },
         ghb: {
@@ -1463,6 +1502,7 @@
             density: 1120,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, burnTime: 0, // FIX: Prevent burning
             desc: 'Schedule I - GHB'
         },
         gbl: {
@@ -1474,6 +1514,7 @@
             density: 1130,
             tempHigh: 204,
             stateHigh: 'steam',
+            burn: 0, burnTime: 0, // FIX: Prevent burning
             desc: 'Schedule I - GBL'
         },
         codeine: {
@@ -1484,6 +1525,7 @@
             density: 1340,
             tempHigh: 157,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             reactions: {
                 morphine: { elem1: 'codeine', elem2: null, chance: 0.15, tempMin: 80 }
             },
@@ -1497,6 +1539,7 @@
             density: 1150,
             tempHigh: 194,
             stateHigh: 'mephedrone_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - Mephedrone'
         },
         methylone: {
@@ -1507,6 +1550,7 @@
             density: 1220,
             tempHigh: 201,
             stateHigh: 'methylone_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - Methylone'
         },
         jwh_018: {
@@ -1517,6 +1561,7 @@
             density: 1180,
             tempHigh: 178,
             stateHigh: 'synthetic_cannabinoid_smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - JWH-018'
         },
         _2c_b: {
@@ -1527,6 +1572,7 @@
             density: 1260,
             tempHigh: 235,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - 2C-B'
         },
         _4_aco_dmt: {
@@ -1537,6 +1583,7 @@
             density: 1290,
             tempHigh: 185,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - 4-AcO-DMT'
         },
         tramadol: {
@@ -1547,6 +1594,7 @@
             density: 1310,
             tempHigh: 180,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule IV - Tramadol'
         },
         ayahuasca_brew: {
@@ -1558,6 +1606,7 @@
             density: 1050,
             tempHigh: 100,
             stateHigh: 'steam',
+            burn: 0, burnTime: 0, // FIX: Prevent burning
             desc: 'Schedule I - Ayahuasca brew'
         },
         kava_extract: {
@@ -1569,6 +1618,7 @@
             density: 1120,
             tempHigh: 95,
             stateHigh: 'steam',
+            burn: 0, burnTime: 0, // FIX: Prevent burning
             desc: 'Unscheduled - Kava extract'
         },
         salvinorin_a: {
@@ -1579,6 +1629,7 @@
             density: 1250,
             tempHigh: 238,
             stateHigh: 'salvinorin_vapor',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - Salvinorin A'
         },
         ibogaine: {
@@ -1589,6 +1640,7 @@
             density: 1320,
             tempHigh: 152,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Schedule I - Ibogaine'
         },
         cathinone: {
@@ -1599,6 +1651,7 @@
             density: 1190,
             tempHigh: 220,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Cathinone - stimulant from khat'
         },
         mitragynine: {
@@ -1609,6 +1662,7 @@
             density: 1250,
             tempHigh: 240,
             stateHigh: 'smoke',
+            burn: 0, burnTime: 0, // FIX: Ensure vaporization
             desc: 'Mitragynine - kratom alkaloid'
         }
     };
@@ -1624,6 +1678,8 @@
                 viscosity: cfg.viscosity,
                 tempHigh: cfg.tempHigh,
                 stateHigh: cfg.stateHigh,
+                burn: cfg.burn,
+                burnTime: cfg.burnTime,
                 reactions: cfg.reactions,
                 desc: cfg.desc
             };
@@ -1994,7 +2050,7 @@
     // 17. COMPLETION LOG
     // --------------------------------------------------------------------------
     console.log('='.repeat(70));
-    console.log('✓ ChemResearch v2 COMPLETE - ALL ELEMENTS RESTORED & FIXED');
+    console.log('✓ ChemResearch v2.1 COMPLETE - ALL ELEMENTS RESTORED & FIXED');
     console.log('='.repeat(70));
     console.log('');
     console.log('📦 ALL ORIGINAL ELEMENTS RESTORED:');
@@ -2016,12 +2072,12 @@
     console.log('  ✓ Fixed behavior reference errors (PW, LIQ, GAS, etc.)');
     console.log('  ✓ Fixed SUPPORT behavior for frozen states');
     console.log('  ✓ Fixed tool functionality for knife/blade');
-    console.log('  ✓ Fixed reaction chains for all compounds');
+    console.log('  ✓ Fixed burn behavior overriding tempHigh state changes');
     console.log('');
     console.log('🔬 ALL COMPOUNDS CRAFTABLE:');
     console.log('  ✓ Universal precursor makes everything craftable');
     console.log('  ✓ Complete synthesis chains preserved');
-    console.log('  ✓ All original reactions working');
+    console.log('  ✓ All temperature-based reactions now reliable');
     console.log('');
     console.log('🧪 ADDED CHEMISTRY ITEMS:');
     console.log('  • Phosphoric acid, potassium hydroxide');
