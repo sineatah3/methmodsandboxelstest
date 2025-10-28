@@ -760,13 +760,13 @@
         }
     };
 
-    // Create strain elements
+    // Create strain elements - ADDED TO BOTANICALS CATEGORY
     Object.entries(cannabisStrains).forEach(([strainId, cfg]) => {
-        // Create the living plant
+        // Create the living plant - ADD TO BOTANICALS
         elements[strainId] = {
             color: cfg.colors,
             behavior: STURDY,
-            category: 'strains',
+            category: 'botanicals', // CHANGED FROM 'strains' TO 'botanicals'
             tempHigh: 180,
             stateHigh: 'ash',
             burn: 5,
@@ -779,11 +779,11 @@
             desc: `${cfg.desc} (${cfg.thc * 100}% THC, ${cfg.cbd * 100}% CBD)`
         };
 
-        // Create the seed
+        // Create the seed - ADD TO BOTANICALS
         elements[`seed_${strainId}`] = {
             color: ['#8d6e63', '#795548', '#a1887f', '#6d4c41'],
             behavior: PW,
-            category: 'strains',
+            category: 'botanicals', // CHANGED FROM 'strains' TO 'botanicals'
             tempHigh: 300,
             stateHigh: 'ash',
             tempLow: -20,
@@ -803,11 +803,11 @@
             desc: `${cfg.desc.split(' - ')[0]} seeds - ${cfg.type}`
         };
 
-        // Create strain-specific flower
+        // Create strain-specific flower - ADD TO RESEARCH COMPOUNDS
         elements[`${strainId}_flower`] = {
             color: cfg.colors,
             behavior: PW,
-            category: 'strains',
+            category: 'research_compounds', // CHANGED FROM 'strains' TO 'research_compounds'
             state: 'solid',
             density: 700,
             tempHigh: 175,
@@ -839,7 +839,7 @@
             chance: 0.4 
         };
     });
-
+    
     // --------------------------------------------------------------------------
     // 7. MASSIVELY EXPANDED PRECURSORS & REAGENTS
     // --------------------------------------------------------------------------
