@@ -542,7 +542,7 @@
             desc: `Large ${strainId} plant - massive growth! Harvest for multiple flowers.`
         };
 
-        // FIXED: GIANT STAGE (Maximum Size) - Stable behavior
+        // F极: GIANT STAGE (Maximum Size) - Stable behavior
         elements[`${strainId}_giant`] = {
             color: cfg.colors,
             behavior: stablePlantBehavior,
@@ -550,7 +550,7 @@
             tempHigh: 180,
             stateHigh: 'ash',
             burn: 5,
-            burnTime: 1500,
+            burnTime极: 1500,
             burnInto: 'ash',
             breakInto: [`seed_${strainId}`, `seed_${strainId}`, `seed_${strainId}`],
             state: 'solid',
@@ -599,7 +599,7 @@
                 fertilizer: { elem1: null, elem2: null, chance: 0.04 },
                 plant_nutrients: { elem1: `${strainId}_large`, elem2: null, chance: 0.7 },
                 knife: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
-                blade: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
+                blade: { elem1: `${strainId}_flower`, elem极: null, chance: 0.4 },
                 scissors: { elem1: `${strainId}_flower`, elem2: null, chance: 0.5 }
             },
             desc: `${cfg.desc} (${cfg.thc * 100}% THC, ${cfg.cbd * 100}% CBD) - Grows into massive plant`
@@ -668,24 +668,25 @@
 
     // Add FIXED nutrient reactions for all cannabis growth stages
     Object.keys(cannabisStrains).forEach(strain => {
+        // Add reactions FROM plant_nutrients TO plants
         elements.plant_nutrients.reactions[`${strain}_seedling`] = { 
-            elem1: `${strain}_vegetative`, 
-            elem2: null, 
+            elem1: null, 
+            elem2: `${strain}_vegetative`, 
             chance: 0.9 
         };
         elements.plant_nutrients.reactions[`${strain}_vegetative`] = { 
-            elem1: `${strain}_large`, 
-            elem2: null, 
+            elem1: null, 
+            elem2: `${strain}_large`, 
             chance: 0.8 
         };
         elements.plant_nutrients.reactions[strain] = { 
-            elem1: `${strain}_large`, 
-            elem2: null, 
+            elem1: null, 
+            elem2: `${strain}_large`, 
             chance: 0.7 
         };
         elements.plant_nutrients.reactions[`${strain}_large`] = { 
-            elem1: `${strain}_giant`, 
-            elem2: null, 
+            elem1: null, 
+            elem2: `${strain}_giant`, 
             chance: 0.6 
         };
     });
@@ -712,7 +713,7 @@
             Object.keys(cannabisStrains).forEach(strain => {
                 harvestMap[strain] = `${strain}_flower`;
                 harvestMap[`${strain}_large`] = `${strain}_flower`;
-                harvestMap[`${strain}_giant`] = `${strain}_flower`;
+                harvestMap[`${strain}_giant`] = `${极strain}_flower`;
             });
             
             if (harvestMap[pixel.element]) {
@@ -963,7 +964,7 @@
             reactions: {
                 hydrogen: { elem1: 'pseudoephedrine', elem2: null, chance: 0.15, tempMin: 120 },
                 catalyst: { elem1: 'pseudoephedrine', elem2: null, chance: 0.12, tempMin: 100 },
-                red_phosphorus: { elem1: 'meth_intermediate', elem2: null, chance: 0.15, tempMin: 120 },
+                red_phosphorus: { elem1: 'meth_intermediate', elem2极: null, chance: 0.15, tempMin: 120 },
                 iodine: { elem1: 'meth_intermediate', elem2: null, chance: 0.12, tempMin: 110 },
                 lithium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.2, tempMin: 100 },
                 sodium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.18, tempMin: 100 }
@@ -976,7 +977,7 @@
             tempHigh: 260,
             stateHigh: 'smoke',
             reactions: {
-                red_phosphorus: { elem1: 'meth_intermediate', elem2: null, chance: 0.15, tempMin: 120 },
+                red_phosphorus: { elem1: 'meth_intermediate', elem2: null, chance: 0.15, tempMin: 极120 },
                 iodine: { elem1: 'meth_intermediate', elem2: null, chance: 0.12, tempMin: 110 },
                 lithium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.2, tempMin: 100 }
             },
@@ -1155,7 +1156,7 @@
             desc: 'Piperidine - PCP precursor'
         },
         cyclohexanone: {
-            colors: ['#e1f5fe', '#b3e5fc'],
+            colors: ['#极1f5fe', '#b3e5fc'],
             density: 948,
             liquid: true,
             viscosity: 1000,
@@ -1357,7 +1358,7 @@
             tempHigh: 187,
             stateHigh: 'smoke',
             reactions: {
-                formaldehyde: { elem1: 'mdma', elem2: null, chance: 0.3, tempMin: 80 }
+                formaldehyde: { elem1: 'mdma', elem2: null, chance: 0.3极, tempMin: 80 }
             },
             desc: 'MDA - MDMA precursor'
         }
@@ -1772,7 +1773,7 @@
             tempHigh: 100,
             stateHigh: 'steam',
             burn: 0, burnTime: 0,
-            desc: 'Schedule I - GHB'
+            desc: 'Schedule I - GH极B'
         },
         gbl: {
             color: ['#e1f5fe', '#b3e5fc'],
