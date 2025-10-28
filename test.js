@@ -1,8 +1,8 @@
 // ============================================================================
-// CHEMRESEARCH_V3_MASSIVELY_EXPANDED_WITH_REALISTIC_GROWTH.JS
-// Maximum Chemistry Elements + Realistic Cannabis Growth
+// CHEMRESEARCH_V3_MASSIVE_PLANTS_COMPLETE.JS
+// Maximum Chemistry Elements + Massive Cannabis Plants - COMPLETE
 // MIT Licence – Research / EDU Use Only – No Real-World Instructions
-// VERSION 3.2 - All research compounds + 200+ elements + 60+ strains + Realistic growth
+// VERSION 3.3 - All research compounds + 200+ elements + 60+ strains + Massive growth
 // ============================================================================
 /* global elements, behaviors, pixel, settings, changePixel */
 
@@ -249,7 +249,6 @@
     // 4. MASSIVE CHEMICAL REAGENTS EXPANSION
     // --------------------------------------------------------------------------
     const chemicalReagents = {
-        // Core acids
         sodium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1130, desc: 'Sodium hydroxide - caustic base' },
         ammonium_hydroxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 910, desc: 'Ammonium hydroxide' },
         hydrochloric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1049, desc: 'Hydrochloric acid' },
@@ -263,16 +262,12 @@
         fatty_acid: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 900, desc: 'Fatty acid' },
         nitrogen: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 0.8, desc: 'Nitrogen gas' },
         dinitrogen_tetroxide: { color: ['#d32f2f', '#c62828'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1440, desc: 'Dinitrogen tetroxide' },
-        
-        // Food/beverage chemistry
         tea: { color: ['#8d6e63', '#795548'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1005, tempHigh: 100, stateHigh: 'steam', desc: 'Tea' },
         cocoa: { color: ['#8d6e63', '#795548'], behavior: PW, category: 'powders', state: 'solid', density: 1450, tempHigh: 200, stateHigh: 'ash', desc: 'Cocoa powder' },
         chocolate: { color: ['#8d6e63', '#795548'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1320, viscosity: 3000, tempHigh: 350, stateHigh: 'burnt_chocolate', desc: 'Chocolate' },
         fat: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 900, viscosity: 2500, tempHigh: 205, stateHigh: 'smoke', desc: 'Fat' },
         oil: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 920, viscosity: 800, tempHigh: 300, stateHigh: 'smoke', desc: 'Plant oil' },
         burnt_chocolate: { color: ['#5d4037', '#4e342e'], behavior: PW, category: 'land', state: 'solid', density: 800, desc: 'Burnt chocolate residue' },
-        
-        // NEW: Expanded organic solvents
         toluene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 867, desc: 'Toluene - aromatic solvent' },
         benzene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 879, desc: 'Benzene - aromatic hydrocarbon' },
         xylene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 860, desc: 'Xylene - industrial solvent' },
@@ -282,8 +277,6 @@
         dichloromethane: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1326, desc: 'Dichloromethane - DCM' },
         chloroform: { color: ['#e8f5e9', '#c8e6c9'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1480, desc: 'Chloroform' },
         diethyl_ether: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 713, desc: 'Diethyl ether' },
-        
-        // NEW: More acids and bases
         phosphoric_acid: { color: ['#f5f5f5', '#eeeeee'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1880, viscosity: 1500, desc: 'Phosphoric acid' },
         nitric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1510, viscosity: 1200, desc: 'Nitric acid' },
         formic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1220, desc: 'Formic acid' },
@@ -291,16 +284,12 @@
         oxalic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1900, desc: 'Oxalic acid' },
         potassium_hydroxide: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'powders', state: 'solid', density: 1120, desc: 'Potassium hydroxide' },
         calcium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1220, desc: 'Calcium hydroxide - slaked lime' },
-        
-        // NEW: Salts and oxidizers
         sodium_chloride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1170, desc: 'Sodium chloride - table salt' },
         potassium_nitrate: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'powders', state: 'solid', density: 1210, desc: 'Potassium nitrate' },
         sodium_nitrate: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'powders', state: 'solid', density: 1270, desc: 'Sodium nitrate' },
         ammonium_nitrate: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'powders', state: 'solid', density: 1725, desc: 'Ammonium nitrate' },
         calcium_chloride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1150, desc: 'Calcium chloride' },
         magnesium_sulfate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1120, desc: 'Magnesium sulfate - Epsom salt' },
-        
-        // NEW: Organics and reagents
         formaldehyde: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1083, desc: 'Formaldehyde solution' },
         phenol: { color: ['#ffccbc', '#ffab91'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1070, desc: 'Phenol - carbolic acid' },
         aniline: { color: ['#8d6e63', '#795548'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1022, desc: 'Aniline - aromatic amine' },
@@ -308,8 +297,6 @@
         piperidine: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 862, desc: 'Piperidine' },
         lithium_aluminum_hydride: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 917, desc: 'LiAlH4 - reducing agent' },
         sodium_borohydride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1074, desc: 'NaBH4 - reducing agent' },
-        
-        // NEW: Gases
         chlorine_gas: { color: ['#c8e6c9', '#a5d6a7'], behavior: GAS, category: 'gases', state: 'gas', density: 0.9, desc: 'Chlorine gas' },
         carbon_dioxide: { color: ['#f5f5f5', '#e0e0e0'], behavior: GAS, category: 'gases', state: 'gas', density: 1.5, desc: 'Carbon dioxide' },
         carbon_monoxide: { color: ['#f5f5f5', '#e0e0e0'], behavior: GAS, category: 'gases', state: 'gas', density: 1.0, desc: 'Carbon monoxide' },
@@ -317,16 +304,12 @@
         hydrogen_sulfide: { color: ['#fff9c4', '#ffecb3'], behavior: GAS, category: 'gases', state: 'gas', density: 1.2, desc: 'Hydrogen sulfide' },
         propane: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 1.5, desc: 'Propane gas' },
         ethylene: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 0.9, desc: 'Ethylene gas' },
-        
-        // NEW: Specialty chemicals
         glycerol: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1261, viscosity: 1500, desc: 'Glycerol' },
         ethylene_glycol: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1113, desc: 'Ethylene glycol' },
         propylene_glycol: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1036, desc: 'Propylene glycol' },
         dimethylformamide: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 944, desc: 'DMF - polar solvent' },
         dimethyl_sulfoxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1100, desc: 'DMSO - aprotic solvent' },
         tetrahydrofuran: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 889, desc: 'THF - cyclic ether' },
-        
-        // NEW: Additional reagents
         ammonia: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 682, viscosity: 600, desc: 'Liquid ammonia' },
         thionyl_chloride: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1638, desc: 'Thionyl chloride' },
         phosphorus_pentoxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 2390, desc: 'P2O5 - desiccant' },
@@ -358,564 +341,435 @@
     });
 
     // --------------------------------------------------------------------------
-    // 5. EXPANDED BOTANICALS (Plants + Seeds) WITH REALISTIC GROWTH
+    // 5. MASSIVE CANNABIS GROWTH SYSTEM
     // --------------------------------------------------------------------------
     
-    // Realistic cannabis growth behavior
-    const realisticCannabisBehavior = [
-        "XX|CR:seedling%0.001|XX",
-        "XX|CH:seedling%0.001|XX",
-        "CR:seedling%0.001 AND CH:seedling%0.001|XX|CR:seedling%0.001 AND CH:seedling%0.001"
+    // Tall growth behaviors for massive plants
+    const largeCannabisBehavior = [
+        "XX|CR:plant_nutrients%0.002 AND M2|XX",
+        "CR:plant_nutrients%0.002 AND M2|XX|CR:plant_nutrients%0.002 AND M2",
+        "XX|M1|XX"
     ];
 
-    const botanicals = {
-        cannabis_sativa: {
-            colors: ['#3e8948', '#4a9b54', '#358843', '#469150'],
-            seed: 'seed_sativa',
-            tempHigh: 180,
-            burn: 5,
-            burnTime: 400,
-            growthRate: 0.002,
-            maxHeight: 5,
-            floweringColors: ['#3e8948', '#4a9b54', '#358843'],
-            desc: 'Cannabis sativa - tall, narrow leaves'
-        },
-        cannabis_indica: {
-            colors: ['#2a5d32', '#1f4d28', '#35663a', '#244f2d'],
-            seed: 'seed_indica',
-            tempHigh: 180,
-            burn: 5,
-            burnTime: 400,
-            growthRate: 0.0015,
-            maxHeight: 3,
-            floweringColors: ['#2a5d32', '#1f4d28', '#35663a'],
-            desc: 'Cannabis indica - short, broad leaves'
-        },
-        cannabis_ruderalis: {
-            colors: ['#4a7c59', '#55876a', '#3f7150', '#5a8c6f'],
-            seed: 'seed_ruderalis',
-            tempHigh: 180,
-            burn: 5,
-            burnTime: 400,
-            growthRate: 0.003,
-            maxHeight: 2,
-            floweringColors: ['#4a7c59', '#55876a', '#3f7150'],
-            desc: 'Cannabis ruderalis - auto-flowering variant'
-        },
-        papaver_somniferum: {
-            colors: ['#7b1fa2', '#9c27b0', '#6a1b8f', '#8e24aa'],
-            seed: 'seed_poppy',
-            tempHigh: 150,
-            burn: 60,
-            burnTime: 350,
-            desc: 'Opium poppy - purple/white flowers'
-        },
-        coca_boliviana: {
-            colors: ['#004d40', '#00695c', '#003d33', '#005b4f'],
-            seed: 'seed_coca_bol',
-            tempHigh: 170,
-            burn: 65,
-            burnTime: 380,
-            desc: 'Bolivian coca - high altitude variety'
-        },
-        coca_colombiana: {
-            colors: ['#00695c', '#00897b', '#00564e', '#007a6a'],
-            seed: 'seed_coca_col',
-            tempHigh: 170,
-            burn: 65,
-            burnTime: 380,
-            desc: 'Colombian coca - lowland variety'
-        },
-        ephedra_sinica: {
-            colors: ['#827717', '#9e9d24', '#6d6611', '#8f8e1f'],
-            seed: 'seed_ephedra',
-            tempHigh: 160,
-            burn: 70,
-            burnTime: 300,
-            desc: 'Ephedra sinica - ma-huang herb'
-        },
-        khat: {
-            colors: ['#558b2f', '#689f38', '#4a7c2a', '#5d9033'],
-            seed: 'seed_khat',
-            tempHigh: 165,
-            burn: 68,
-            burnTime: 320,
-            desc: 'Khat plant - contains cathinone'
-        },
-        kratom: {
-            colors: ['#33691e', '#4a7c2f', '#2d5a1a', '#3e6d27'],
-            seed: 'seed_kratom',
-            tempHigh: 165,
-            burn: 68,
-            burnTime: 330,
-            desc: 'Mitragyna speciosa - kratom tree'
-        },
-        psilocybe_cubensis: {
-            colors: ['#6d4c41', '#795548', '#5d4037', '#6b4d43'],
-            seed: 'spore_cubensis',
-            tempHigh: 140,
-            burn: 55,
-            burnTime: 280,
-            desc: 'Psilocybe cubensis - magic mushroom'
-        },
-        iboga: {
-            colors: ['#3e2723', '#4e342e', '#321d19', '#452e29'],
-            seed: 'seed_iboga',
-            tempHigh: 170,
-            burn: 66,
-            burnTime: 360,
-            desc: 'Tabernanthe iboga - African shrub'
-        },
-        salvia_divinorum: {
-            colors: ['#004d40', '#00695c', '#003d33', '#005b4f'],
-            seed: 'seed_salvia',
-            tempHigh: 155,
-            burn: 63,
-            burnTime: 310,
-            desc: 'Salvia divinorum - diviners sage'
-        },
-        banisteriopsis_caapi: {
-            colors: ['#2e7d32', '#388e3c', '#1b5e20', '#2e7d32'],
-            seed: 'seed_caapi',
-            tempHigh: 165,
-            burn: 67,
-            burnTime: 340,
-            desc: 'Banisteriopsis caapi - ayahuasca vine'
-        },
-        peyote: {
-            colors: ['#7cb342', '#689f38', '#558b2f'],
-            seed: 'seed_peyote',
-            tempHigh: 160,
-            burn: 65,
-            burnTime: 320,
-            desc: 'Peyote cactus - contains mescaline'
-        },
-        morning_glory: {
-            colors: ['#5c6bc0', '#3f51b5', '#3949ab'],
-            seed: 'seed_morning_glory',
-            tempHigh: 155,
-            burn: 60,
-            burnTime: 280,
-            desc: 'Morning glory - contains LSA'
-        },
-        tobacco: {
-            colors: ['#2e7d32', '#388e3c', '#43a047'],
-            seed: 'seed_tobacco',
-            tempHigh: 170,
-            burn: 75,
-            burnTime: 350,
-            desc: 'Tobacco plant - contains nicotine'
-        },
-        coffee: {
-            colors: ['#8d6e63', '#795548', '#6d4c41'],
-            seed: 'seed_coffee',
-            tempHigh: 165,
-            burn: 70,
-            burnTime: 300,
-            desc: 'Coffee plant - contains caffeine'
-        },
-        psychotria: {
-            colors: ['#2e7d32', '#388e3c'],
-            seed: 'seed_psychotria',
-            tempHigh: 160,
-            burn: 65,
-            burnTime: 280,
-            desc: 'Psychotria viridis - DMT-containing plant'
-        }
-    };
+    const giantCannabisBehavior = [
+        "XX|CR:plant_nutrients%0.003 AND M2|XX",
+        "CR:plant_nutrients%0.003 AND M2|XX|CR:plant_nutrients%0.003 AND M2", 
+        "XX|M1 AND CR:plant_nutrients%0.001|XX"
+    ];
 
-    // Create base botanical plants
-    Object.entries(botanicals).forEach(([plant, cfg]) => {
-        elements[plant] = {
-            color: cfg.colors,
-            behavior: STURDY,
-            category: 'botanicals',
-            tempHigh: cfg.tempHigh,
-            stateHigh: 'ash',
-            burn: cfg.burn,
-            burnTime: cfg.burnTime,
-            burnInto: 'ash',
-            breakInto: cfg.seed,
-            state: 'solid',
-            density: 800,
-            conduct: 0.05,
-            desc: cfg.desc + ' - Research use only.'
-        };
-
-        // Seeds
-        elements[cfg.seed] = {
-            color: ['#8d6e63', '#795548', '#a1887f', '#6d4c41'],
-            behavior: PW,
-            category: 'botanicals',
-            tempHigh: 300,
-            stateHigh: 'ash',
-            tempLow: -20,
-            stateLow: 'frozen_seed',
-            state: 'solid',
-            density: 1100,
-            burn: 0,
-            burnTime: 0,
-            conduct: 0.05,
-            reactions: {
-                soil: { elem1: plant, elem2: null, chance: 0.04, tempMin: 15 },
-                wet_soil: { elem1: plant, elem2: null, chance: 0.06, tempMin: 15 },
-                mud: { elem1: plant, elem2: null, chance: 0.08, tempMin: 15 },
-                water: { elem1: plant, elem2: null, chance: 0.03, tempMin: 15 },
-                fertilizer: { elem1: plant, elem2: null, chance: 0.10, tempMin: 15 }
-            },
-            desc: 'Seed/spore - Needs soil and warmth (15°C+) to grow'
-        };
-    });
-
-    // --------------------------------------------------------------------------
-    // 6. CANNABIS STRAINS - COMPREHENSIVE COLLECTION WITH REALISTIC GROWTH
-    // --------------------------------------------------------------------------
     const cannabisStrains = {
-        // LEGENDARY CLASSICS
         og_kush: {
-            colors: ['#3e8948', '#2d6634', '#4a9b54'],
+            colors: ['#3e8948', '#2d6634', '#4a9b54', '#1f4d28', '#358843'],
             thc: 0.25,
             cbd: 0.05,
             type: 'hybrid',
-            growthRate: 0.0018,
-            maxHeight: 4,
-            floweringColors: ['#3e8948', '#2d6634', '#4a9b54'],
+            growthRate: 0.0038,
+            maxHeight: 10,
+            behavior: giantCannabisBehavior,
             desc: 'OG Kush - legendary West Coast strain'
         },
         sour_diesel: {
-            colors: ['#7cb342', '#689f38', '#558b2f'],
+            colors: ['#7cb342', '#689f38', '#558b2f', '#8bc34a', '#4caf50'],
             thc: 0.26,
             cbd: 0.02,
             type: 'sativa',
-            growthRate: 0.0022,
-            maxHeight: 5,
-            floweringColors: ['#7cb342', '#689f38', '#558b2f'],
+            growthRate: 0.0042,
+            maxHeight: 14,
+            behavior: giantCannabisBehavior,
             desc: 'Sour Diesel - energizing diesel aroma'
         },
         blue_dream: {
-            colors: ['#5c6bc0', '#3949ab', '#4a5f8d'],
+            colors: ['#5c6bc0', '#3949ab', '#4a5f8d', '#3f51b5', '#303f9f'],
             thc: 0.24,
             cbd: 0.03,
             type: 'hybrid',
-            growthRate: 0.002,
-            maxHeight: 4,
-            floweringColors: ['#5c6bc0', '#3949ab', '#4a5f8d'],
+            growthRate: 0.0035,
+            maxHeight: 9,
+            behavior: largeCannabisBehavior,
             desc: 'Blue Dream - balanced California classic'
         },
         girl_scout_cookies: {
-            colors: ['#6a4c93', '#553c7a', '#7d5ba6'],
+            colors: ['#6a4c93', '#553c7a', '#7d5ba6', '#8e24aa', '#6a1b9a'],
             thc: 0.28,
             cbd: 0.02,
             type: 'hybrid',
-            growthRate: 0.0015,
-            maxHeight: 3,
-            floweringColors: ['#6a4c93', '#553c7a', '#7d5ba6'],
+            growthRate: 0.0032,
+            maxHeight: 7,
+            behavior: largeCannabisBehavior,
             desc: 'Girl Scout Cookies (GSC) - sweet and potent'
         },
-        ak_47: {
-            colors: ['#558b2f', '#33691e', '#689f38'],
-            thc: 0.23,
-            cbd: 0.03,
-            type: 'hybrid',
-            growthRate: 0.0021,
-            maxHeight: 4,
-            floweringColors: ['#558b2f', '#33691e', '#689f38'],
-            desc: 'AK-47 - one-hit wonder'
-        },
-        white_widow: {
-            colors: ['#e8f5e9', '#c8e6c9', '#a5d6a7'],
-            thc: 0.25,
-            cbd: 0.02,
-            type: 'hybrid',
-            growthRate: 0.0019,
-            maxHeight: 4,
-            floweringColors: ['#e8f5e9', '#c8e6c9', '#a5d6a7'],
-            desc: 'White Widow - Dutch classic, white crystals'
-        },
-        northern_lights: {
-            colors: ['#1b5e20', '#2e7d32', '#388e3c'],
-            thc: 0.22,
-            cbd: 0.04,
-            type: 'indica',
-            growthRate: 0.0014,
-            maxHeight: 3,
-            floweringColors: ['#1b5e20', '#2e7d32', '#388e3c'],
-            desc: 'Northern Lights - relaxing, purple hues'
-        },
-        jack_herer: {
-            colors: ['#7cb342', '#8bc34a', '#9ccc65'],
-            thc: 0.24,
-            cbd: 0.03,
-            type: 'sativa',
-            growthRate: 0.0023,
-            maxHeight: 5,
-            floweringColors: ['#7cb342', '#8bc34a', '#9ccc65'],
-            desc: 'Jack Herer - uplifting, named after activist'
-        },
-        
-        // MODERN FAVORITES
         gorilla_glue: {
-            colors: ['#4a7c2f', '#5d9033', '#3e6d27'],
+            colors: ['#4a7c2f', '#5d9033', '#3e6d27', '#689f38', '#558b2f'],
             thc: 0.30,
             cbd: 0.02,
             type: 'hybrid',
-            growthRate: 0.0016,
-            maxHeight: 4,
-            floweringColors: ['#4a7c2f', '#5d9033', '#3e6d27'],
+            growthRate: 0.0036,
+            maxHeight: 8,
+            behavior: largeCannabisBehavior,
             desc: 'Gorilla Glue #4 - extremely sticky and potent'
         },
-        gelato: {
-            colors: ['#7b5ba6', '#9575cd', '#6a4c93'],
-            thc: 0.27,
-            cbd: 0.02,
-            type: 'hybrid',
-            growthRate: 0.0017,
-            maxHeight: 3,
-            floweringColors: ['#7b5ba6', '#9575cd', '#6a4c93'],
-            desc: 'Gelato - dessert strain, sweet flavors'
-        },
-        wedding_cake: {
-            colors: ['#e1bee7', '#ce93d8', '#ba68c8'],
-            thc: 0.27,
-            cbd: 0.02,
-            type: 'indica',
-            growthRate: 0.0015,
-            maxHeight: 3,
-            floweringColors: ['#e1bee7', '#ce93d8', '#ba68c8'],
-            desc: 'Wedding Cake - sweet, vanilla frosting aroma'
-        },
-        zkittlez: {
-            colors: ['#8e44ad', '#9b59b6', '#7d3c98'],
-            thc: 0.23,
-            cbd: 0.03,
-            type: 'indica',
-            growthRate: 0.0014,
-            maxHeight: 3,
-            floweringColors: ['#8e44ad', '#9b59b6', '#7d3c98'],
-            desc: 'Zkittlez - fruity rainbow flavors'
-        },
-        runtz: {
-            colors: ['#ab47bc', '#ba68c8', '#9c27b0'],
-            thc: 0.29,
-            cbd: 0.02,
-            type: 'hybrid',
-            growthRate: 0.0016,
-            maxHeight: 3,
-            floweringColors: ['#ab47bc', '#ba68c8', '#9c27b0'],
-            desc: 'Runtz - candy-like, Instagram famous'
-        },
-        mac: {
-            colors: ['#81c784', '#66bb6a', '#4caf50'],
-            thc: 0.26,
-            cbd: 0.03,
-            type: 'hybrid',
-            growthRate: 0.0018,
-            maxHeight: 4,
-            floweringColors: ['#81c784', '#66bb6a', '#4caf50'],
-            desc: 'MAC (Miracle Alien Cookies) - unique terpenes'
-        },
-        
-        // INDICA DOMINANTS
-        granddaddy_purple: {
-            colors: ['#6a1b9a', '#7b1fa2', '#8e24aa'],
-            thc: 0.23,
-            cbd: 0.03,
-            type: 'indica',
-            growthRate: 0.0013,
-            maxHeight: 3,
-            floweringColors: ['#6a1b9a', '#7b1fa2', '#8e24aa'],
-            desc: 'Granddaddy Purple - deep purple, grape aroma'
-        },
-        purple_punch: {
-            colors: ['#8e24aa', '#9c27b0', '#ab47bc'],
-            thc: 0.25,
-            cbd: 0.02,
-            type: 'indica',
-            growthRate: 0.0014,
-            maxHeight: 3,
-            floweringColors: ['#8e24aa', '#9c27b0', '#ab47bc'],
-            desc: 'Purple Punch - sedating berry dessert'
-        },
-        bubba_kush: {
-            colors: ['#1b5e20', '#2e7d32', '#1c4d23'],
+        northern_lights: {
+            colors: ['#1b5e20', '#2e7d32', '#388e3c', '#43a047', '#4caf50'],
             thc: 0.22,
             cbd: 0.04,
             type: 'indica',
-            growthRate: 0.0012,
-            maxHeight: 3,
-            floweringColors: ['#1b5e20', '#2e7d32', '#1c4d23'],
-            desc: 'Bubba Kush - heavy sedation, coffee notes'
+            growthRate: 0.0031,
+            maxHeight: 8,
+            behavior: largeCannabisBehavior,
+            desc: 'Northern Lights - relaxing, purple hues'
         },
-        afghani: {
-            colors: ['#33691e', '#558b2f', '#2e5d1f'],
-            thc: 0.20,
-            cbd: 0.05,
-            type: 'indica',
-            growthRate: 0.0011,
-            maxHeight: 3,
-            floweringColors: ['#33691e', '#558b2f', '#2e5d1f'],
-            desc: 'Afghani - ancient landrace, pure indica'
-        },
-        blueberry: {
-            colors: ['#3949ab', '#5c6bc0', '#3f51b5'],
-            thc: 0.21,
+        granddaddy_purple: {
+            colors: ['#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc'],
+            thc: 0.23,
             cbd: 0.03,
             type: 'indica',
-            growthRate: 0.0013,
-            maxHeight: 3,
-            floweringColors: ['#3949ab', '#5c6bc0', '#3f51b5'],
-            desc: 'Blueberry - sweet berry flavor, relaxing'
+            growthRate: 0.0028,
+            maxHeight: 7,
+            behavior: largeCannabisBehavior,
+            desc: 'Granddaddy Purple - deep purple, grape aroma'
         },
-        
-        // SATIVA DOMINANTS
+        white_widow: {
+            colors: ['#e8f5e9', '#c8e6c9', '#a5d6a7', '#81c784', '#66bb6a'],
+            thc: 0.25,
+            cbd: 0.02,
+            type: 'hybrid',
+            growthRate: 0.0039,
+            maxHeight: 11,
+            behavior: giantCannabisBehavior,
+            desc: 'White Widow - Dutch classic, white crystals'
+        },
+        jack_herer: {
+            colors: ['#7cb342', '#8bc34a', '#9ccc65', '#aed581', '#c5e1a5'],
+            thc: 0.24,
+            cbd: 0.03,
+            type: 'sativa',
+            growthRate: 0.0043,
+            maxHeight: 13,
+            behavior: giantCannabisBehavior,
+            desc: 'Jack Herer - uplifting, named after activist'
+        },
         green_crack: {
-            colors: ['#7cb342', '#8bc34a', '#689f38'],
+            colors: ['#7cb342', '#8bc34a', '#689f38', '#9ccc65', '#aed581'],
             thc: 0.24,
             cbd: 0.02,
             type: 'sativa',
-            growthRate: 0.0024,
-            maxHeight: 5,
-            floweringColors: ['#7cb342', '#8bc34a', '#689f38'],
+            growthRate: 0.0045,
+            maxHeight: 15,
+            behavior: giantCannabisBehavior,
             desc: 'Green Crack - energizing, focus-enhancing'
         },
         durban_poison: {
-            colors: ['#7cb342', '#8bc34a', '#9ccc65'],
+            colors: ['#7cb342', '#8bc34a', '#9ccc65', '#aed581', '#c5e1a5'],
             thc: 0.24,
             cbd: 0.02,
             type: 'sativa',
-            growthRate: 0.0025,
-            maxHeight: 5,
-            floweringColors: ['#7cb342', '#8bc34a', '#9ccc65'],
+            growthRate: 0.0048,
+            maxHeight: 16,
+            behavior: giantCannabisBehavior,
             desc: 'Durban Poison - African landrace, pure sativa'
         },
+        ak_47: {
+            colors: ['#558b2f', '#33691e', '#689f38', '#7cb342', '#8bc34a'],
+            thc: 0.23,
+            cbd: 0.03,
+            type: 'hybrid',
+            growthRate: 0.0037,
+            maxHeight: 9,
+            behavior: largeCannabisBehavior,
+            desc: 'AK-47 - one-hit wonder'
+        },
+        gelato: {
+            colors: ['#7b5ba6', '#9575cd', '#6a4c93', '#8e24aa', '#7b1fa2'],
+            thc: 0.27,
+            cbd: 0.02,
+            type: 'hybrid',
+            growthRate: 0.0034,
+            maxHeight: 7,
+            behavior: largeCannabisBehavior,
+            desc: 'Gelato - dessert strain, sweet flavors'
+        },
+        wedding_cake: {
+            colors: ['#e1bee7', '#ce93d8', '#ba68c8', '#ab47bc', '#8e24aa'],
+            thc: 0.27,
+            cbd: 0.02,
+            type: 'indica',
+            growthRate: 0.0030,
+            maxHeight: 6,
+            behavior: largeCannabisBehavior,
+            desc: 'Wedding Cake - sweet, vanilla frosting aroma'
+        },
+        zkittlez: {
+            colors: ['#8e44ad', '#9b59b6', '#7d3c98', '#6a1b9a', '#4a148c'],
+            thc: 0.23,
+            cbd: 0.03,
+            type: 'indica',
+            growthRate: 0.0029,
+            maxHeight: 6,
+            behavior: largeCannabisBehavior,
+            desc: 'Zkittlez - fruity rainbow flavors'
+        },
+        runtz: {
+            colors: ['#ab47bc', '#ba68c8', '#9c27b0', '#8e24aa', '#7b1fa2'],
+            thc: 0.29,
+            cbd: 0.02,
+            type: 'hybrid',
+            growthRate: 0.0033,
+            maxHeight: 7,
+            behavior: largeCannabisBehavior,
+            desc: 'Runtz - candy-like, Instagram famous'
+        },
+        mac: {
+            colors: ['#81c784', '#66bb6a', '#4caf50', '#43a047', '#388e3c'],
+            thc: 0.26,
+            cbd: 0.03,
+            type: 'hybrid',
+            growthRate: 0.0036,
+            maxHeight: 8,
+            behavior: largeCannabisBehavior,
+            desc: 'MAC (Miracle Alien Cookies) - unique terpenes'
+        },
+        purple_punch: {
+            colors: ['#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8'],
+            thc: 0.25,
+            cbd: 0.02,
+            type: 'indica',
+            growthRate: 0.0027,
+            maxHeight: 6,
+            behavior: largeCannabisBehavior,
+            desc: 'Purple Punch - sedating berry dessert'
+        },
+        bubba_kush: {
+            colors: ['#1b5e20', '#2e7d32', '#1c4d23', '#388e3c', '#43a047'],
+            thc: 0.22,
+            cbd: 0.04,
+            type: 'indica',
+            growthRate: 0.0025,
+            maxHeight: 6,
+            behavior: largeCannabisBehavior,
+            desc: 'Bubba Kush - heavy sedation, coffee notes'
+        },
+        afghani: {
+            colors: ['#33691e', '#558b2f', '#2e5d1f', '#689f38', '#7cb342'],
+            thc: 0.20,
+            cbd: 0.05,
+            type: 'indica',
+            growthRate: 0.0024,
+            maxHeight: 5,
+            behavior: largeCannabisBehavior,
+            desc: 'Afghani - ancient landrace, pure indica'
+        },
+        blueberry: {
+            colors: ['#3949ab', '#5c6bc0', '#3f51b5', '#303f9f', '#283593'],
+            thc: 0.21,
+            cbd: 0.03,
+            type: 'indica',
+            growthRate: 0.0026,
+            maxHeight: 6,
+            behavior: largeCannabisBehavior,
+            desc: 'Blueberry - sweet berry flavor, relaxing'
+        },
         trainwreck: {
-            colors: ['#689f38', '#7cb342', '#558b2f'],
+            colors: ['#689f38', '#7cb342', '#558b2f', '#8bc34a', '#9ccc65'],
             thc: 0.25,
             cbd: 0.02,
             type: 'sativa',
-            growthRate: 0.0022,
-            maxHeight: 5,
-            floweringColors: ['#689f38', '#7cb342', '#558b2f'],
+            growthRate: 0.0040,
+            maxHeight: 12,
+            behavior: giantCannabisBehavior,
             desc: 'Trainwreck - fast-hitting, pine aroma'
         },
         super_lemon_haze: {
-            colors: ['#cddc39', '#d4e157', '#c0ca33'],
+            colors: ['#cddc39', '#d4e157', '#c0ca33', '#afb42b', '#9e9d24'],
             thc: 0.25,
             cbd: 0.02,
             type: 'sativa',
-            growthRate: 0.0023,
-            maxHeight: 5,
-            floweringColors: ['#cddc39', '#d4e157', '#c0ca33'],
+            growthRate: 0.0041,
+            maxHeight: 13,
+            behavior: giantCannabisBehavior,
             desc: 'Super Lemon Haze - citrus burst, creative'
         },
         maui_wowie: {
-            colors: ['#8bc34a', '#9ccc65', '#aed581'],
+            colors: ['#8bc34a', '#9ccc65', '#aed581', '#7cb342', '#689f38'],
             thc: 0.22,
             cbd: 0.03,
             type: 'sativa',
-            growthRate: 0.0021,
-            maxHeight: 5,
-            floweringColors: ['#8bc34a', '#9ccc65', '#aed581'],
+            growthRate: 0.0039,
+            maxHeight: 11,
+            behavior: giantCannabisBehavior,
             desc: 'Maui Wowie - Hawaiian, tropical flavors'
         },
-        
-        // HIGH CBD STRAINS
         charlottes_web: {
-            colors: ['#7cb342', '#8bc34a', '#689f38'],
+            colors: ['#7cb342', '#8bc34a', '#689f38', '#9ccc65', '#aed581'],
             thc: 0.03,
             cbd: 0.17,
             type: 'sativa',
-            growthRate: 0.002,
-            maxHeight: 4,
-            floweringColors: ['#7cb342', '#8bc34a', '#689f38'],
+            growthRate: 0.0035,
+            maxHeight: 10,
+            behavior: largeCannabisBehavior,
             desc: "Charlotte's Web - high CBD, medical use"
         },
         harlequin: {
-            colors: ['#689f38', '#7cb342', '#558b2f'],
+            colors: ['#689f38', '#7cb342', '#558b2f', '#8bc34a', '#9ccc65'],
             thc: 0.08,
             cbd: 0.15,
             type: 'sativa',
-            growthRate: 0.0019,
-            maxHeight: 4,
-            floweringColors: ['#689f38', '#7cb342', '#558b2f'],
+            growthRate: 0.0034,
+            maxHeight: 9,
+            behavior: largeCannabisBehavior,
             desc: 'Harlequin - balanced CBD:THC, clear-headed'
         },
         acdc: {
-            colors: ['#558b2f', '#689f38', '#7cb342'],
+            colors: ['#558b2f', '#689f38', '#7cb342', '#8bc34a', '#9ccc65'],
             thc: 0.01,
             cbd: 0.20,
             type: 'sativa',
-            growthRate: 0.0018,
-            maxHeight: 4,
-            floweringColors: ['#558b2f', '#689f38', '#7cb342'],
+            growthRate: 0.0033,
+            maxHeight: 9,
+            behavior: largeCannabisBehavior,
             desc: 'AC/DC - very high CBD, minimal psychoactivity'
         },
         cannatonic: {
-            colors: ['#7cb342', '#8bc34a', '#9ccc65'],
+            colors: ['#7cb342', '#8bc34a', '#9ccc65', '#aed581', '#c5e1a5'],
             thc: 0.06,
             cbd: 0.12,
             type: 'hybrid',
-            growthRate: 0.0017,
-            maxHeight: 4,
-            floweringColors: ['#7cb342', '#8bc34a', '#9ccc65'],
+            growthRate: 0.0032,
+            maxHeight: 8,
+            behavior: largeCannabisBehavior,
             desc: 'Cannatonic - balanced, therapeutic'
         }
     };
 
-    // Create strain elements with realistic growth stages
+    // Create MASSIVE cannabis strain growth system
     Object.entries(cannabisStrains).forEach(([strainId, cfg]) => {
         
-        // Create growth stages for each strain
+        // SEEDLING STAGE
         elements[`${strainId}_seedling`] = {
             color: ['#8bc34a', '#7cb342', '#9ccc65'],
-            behavior: realisticCannabisBehavior,
+            behavior: [
+                "XX|CR:plant_nutrients%0.001|XX",
+                "XX|CH:plant_nutrients%0.001|XX", 
+                "CR:plant_nutrients%0.001 AND CH:plant_nutrients%0.001|XX|CR:plant_nutrients%0.001 AND CH:plant_nutrients%0.001"
+            ],
             category: 'botanicals',
             tempHigh: 150,
             stateHigh: 'ash',
             state: 'solid',
             density: 700,
-            
-            // Growth into vegetative stage
             grow: true,
-            growTime: 150,
+            growTime: 80,
             growInto: `${strainId}_vegetative`,
-            
             reactions: {
                 soil: { elem1: null, elem2: null, chance: 0.005 },
                 wet_soil: { elem1: null, elem2: null, chance: 0.01 },
-                fertilizer: { elem1: null, elem2: null, chance: 0.02 }
+                fertilizer: { elem1: null, elem2: null, chance: 0.02 },
+                plant_nutrients: { elem1: `${strainId}_vegetative`, elem2: null, chance: 0.4 }
             },
-            
-            desc: `Young ${strainId} seedling`
+            desc: `Young ${strainId} seedling - grows fast with nutrients`
         };
 
+        // VEGETATIVE STAGE
         elements[`${strainId}_vegetative`] = {
             color: ['#4caf50', '#66bb6a', '#81c784'],
-            behavior: realisticCannabisBehavior,
+            behavior: largeCannabisBehavior,
             category: 'botanicals',
             tempHigh: 170,
             stateHigh: 'ash',
             state: 'solid',
             density: 750,
-            
-            // Growth into flowering stage
             grow: true,
-            growTime: 200,
-            growInto: `${strainId}_flowering`,
-            
+            growTime: 120,
+            growInto: `${strainId}_large`,
             reactions: {
                 soil: { elem1: null, elem2: null, chance: 0.008 },
                 wet_soil: { elem1: null, elem2: null, chance: 0.015 },
-                fertilizer: { elem1: null, elem2: null, chance: 0.03 }
+                fertilizer: { elem1: null, elem2: null, chance: 0.03 },
+                plant_nutrients: { elem1: `${strainId}_large`, elem2: null, chance: 0.35 }
             },
-            
-            desc: `Vegetative ${strainId} plant`
+            desc: `Vegetative ${strainId} plant - growing larger`
         };
 
-        // Main flowering plant (mature stage)
+        // LARGE STAGE (Massive Plant)
+        elements[`${strainId}_large`] = {
+            color: cfg.colors,
+            behavior: cfg.behavior,
+            category: 'botanicals',
+            tempHigh: 180,
+            stateHigh: 'ash',
+            burn: 5,
+            burnTime: 1200,
+            burnInto: 'ash',
+            breakInto: `seed_${strainId}`,
+            state: 'solid',
+            density: 600,
+            grow: true,
+            growTime: 100,
+            growInto: `${strainId}_giant`,
+            reactions: {
+                soil: { elem1: null, elem2: null, chance: 0.03 },
+                wet_soil: { elem1: null, elem2: null, chance: 0.06 },
+                mud: { elem1: null, elem2: null, chance: 0.05 },
+                fertilizer: { elem1: null, elem2: null, chance: 0.12 },
+                plant_nutrients: { elem1: `${strainId}_giant`, elem2: null, chance: 0.25 },
+                water: { elem1: null, elem2: null, chance: 0.02 }
+            },
+            tool: function(pixel) {
+                changePixel(pixel, `${strainId}_flower`);
+                for (let i = 0; i < 3; i++) {
+                    const x = pixel.x + (Math.random() * 6 - 3);
+                    const y = pixel.y + (Math.random() * 6 - 3);
+                    if (x >= 0 && x < width && y >= 0 && y < height) {
+                        if (!isEmpty(x, y, true)) continue;
+                        createPixel(`${strainId}_flower`, x, y);
+                    }
+                }
+                return true;
+            },
+            desc: `Large ${strainId} plant - massive growth! Harvest for multiple flowers.`
+        };
+
+        // GIANT STAGE (Maximum Size)
+        elements[`${strainId}_giant`] = {
+            color: cfg.colors,
+            behavior: giantCannabisBehavior,
+            category: 'botanicals',
+            tempHigh: 180,
+            stateHigh: 'ash',
+            burn: 5,
+            burnTime: 1500,
+            burnInto: 'ash',
+            breakInto: [`seed_${strainId}`, `seed_${strainId}`, `seed_${strainId}`],
+            state: 'solid',
+            density: 500,
+            grow: false,
+            reactions: {
+                soil: { elem1: null, elem2: null, chance: 0.04 },
+                wet_soil: { elem1: null, elem2: null, chance: 0.08 },
+                mud: { elem1: null, elem2: null, chance: 0.07 },
+                fertilizer: { elem1: null, elem2: null, chance: 0.15 },
+                plant_nutrients: { elem1: null, elem2: null, chance: 0.3 },
+                water: { elem1: null, elem2: null, chance: 0.03 },
+                rain: { elem1: null, elem2: null, chance: 0.05 }
+            },
+            tool: function(pixel) {
+                changePixel(pixel, `${strainId}_flower`);
+                for (let i = 0; i < 8; i++) {
+                    const x = pixel.x + (Math.random() * 10 - 5);
+                    const y = pixel.y + (Math.random() * 10 - 5);
+                    if (x >= 0 && x < width && y >= 0 && y < height) {
+                        if (!isEmpty(x, y, true)) continue;
+                        createPixel(`${strainId}_flower`, x, y);
+                    }
+                }
+                return true;
+            },
+            desc: `Giant ${strainId} plant - MAXIMUM SIZE! Massive yield when harvested.`
+        };
+
+        // MAIN PLANT (Flowering stage - alias for large)
         elements[strainId] = {
-            color: cfg.floweringColors,
-            behavior: realisticCannabisBehavior,
+            color: cfg.colors,
+            behavior: cfg.behavior,
             category: 'botanicals',
             tempHigh: 180,
             stateHigh: 'ash',
@@ -925,23 +779,26 @@
             breakInto: `seed_${strainId}`,
             state: 'solid',
             density: 800,
-            
-            // Mature plant - can be harvested
-            grow: false,
-            
+            grow: true,
+            growTime: 60,
+            growInto: `${strainId}_large`,
             reactions: {
+                soil: { elem1: null, elem2: null, chance: 0.02 },
+                wet_soil: { elem1: null, elem2: null, chance: 0.04 },
+                mud: { elem1: null, elem2: null, chance: 0.03 },
+                fertilizer: { elem1: null, elem2: null, chance: 0.08 },
+                plant_nutrients: { elem1: `${strainId}_large`, elem2: null, chance: 0.15 },
                 knife: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
                 blade: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
                 scissors: { elem1: `${strainId}_flower`, elem2: null, chance: 0.5 }
             },
-            
-            desc: `${cfg.desc} (${cfg.thc * 100}% THC, ${cfg.cbd * 100}% CBD) - Flowering stage`
+            desc: `${cfg.desc} (${cfg.thc * 100}% THC, ${cfg.cbd * 100}% CBD) - Grows into massive plant`
         };
 
-        // Create the flowering stage (alias for main plant)
+        // FLOWERING STAGE (alias)
         elements[`${strainId}_flowering`] = {
-            color: cfg.floweringColors,
-            behavior: realisticCannabisBehavior,
+            color: cfg.colors,
+            behavior: cfg.behavior,
             category: 'botanicals',
             tempHigh: 180,
             stateHigh: 'ash',
@@ -951,20 +808,18 @@
             breakInto: `seed_${strainId}`,
             state: 'solid',
             density: 800,
-            
-            // Mature plant - can be harvested
-            grow: false,
-            
+            grow: true,
+            growTime: 60,
+            growInto: `${strainId}_large`,
             reactions: {
                 knife: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
                 blade: { elem1: `${strainId}_flower`, elem2: null, chance: 0.4 },
                 scissors: { elem1: `${strainId}_flower`, elem2: null, chance: 0.5 }
             },
-            
-            desc: `Flowering ${strainId} plant - ready for harvest`
+            desc: `Flowering ${strainId} plant - ready for harvest or let grow larger`
         };
 
-        // Create the seed - UPDATED TO GROW INTO SEEDLING
+        // SEEDS - FAST GROWTH INTO MASSIVE PLANTS
         elements[`seed_${strainId}`] = {
             color: ['#8d6e63', '#795548', '#a1887f', '#6d4c41'],
             behavior: PW,
@@ -979,18 +834,19 @@
             burnTime: 0,
             conduct: 0.05,
             reactions: {
-                soil: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.04, tempMin: 18 },
-                wet_soil: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.06, tempMin: 18 },
-                mud: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.08, tempMin: 18 },
-                water: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.03, tempMin: 18 },
-                fertilizer: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.10, tempMin: 18 }
+                soil: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.08, tempMin: 18 },
+                wet_soil: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.12, tempMin: 18 },
+                mud: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.15, tempMin: 18 },
+                water: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.06, tempMin: 18 },
+                fertilizer: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.20, tempMin: 18 },
+                plant_nutrients: { elem1: `${strainId}_vegetative`, elem2: null, chance: 0.25, tempMin: 18 }
             },
-            desc: `${cfg.desc.split(' - ')[0]} seeds - ${cfg.type} - Needs warm soil (18°C+) to sprout`
+            desc: `${cfg.desc.split(' - ')[0]} seeds - ${cfg.type} - Grows into MASSIVE plants with nutrients`
         };
 
-        // Create strain-specific flower
+        // FLOWER PRODUCT (Harvested buds)
         elements[`${strainId}_flower`] = {
-            color: cfg.floweringColors,
+            color: cfg.colors,
             behavior: PW,
             category: 'research_compounds',
             state: 'solid',
@@ -1006,18 +862,14 @@
                 ethanol: { elem1: 'cannabis_oil', elem2: 'plant_matter', chance: 0.2 },
                 hexane: { elem1: 'bho', elem2: 'plant_matter', chance: 0.28 }
             },
-            desc: `${cfg.desc} - ${cfg.thc * 100}% THC - Harvested buds`
+            desc: `${cfg.desc} - ${cfg.thc * 100}% THC - Harvested from massive plants`
         };
     });
 
-    // [REST OF YOUR ORIGINAL MOD CODE CONTINUES...]
-    // (All the precursors, intermediates, final compounds, etc. from your original mod)
-
     // --------------------------------------------------------------------------
-    // ADD NEW GROWTH-RELATED TOOLS
+    // 6. PLANT NUTRIENTS FOR MASSIVE GROWTH
     // --------------------------------------------------------------------------
     
-    // Plant Nutrients
     if (!elements.plant_nutrients) {
         elements.plant_nutrients = {
             color: ['#fff9c4', '#ffecb3', '#ffe082'],
@@ -1025,29 +877,28 @@
             category: 'tools',
             state: 'solid',
             density: 900,
-            reactions: {
-                // Boost growth of all cannabis seedlings
-                'cannabis_sativa_seedling': { elem1: 'cannabis_sativa_vegetative', elem2: null, chance: 0.3 },
-                'cannabis_indica_seedling': { elem1: 'cannabis_indica_vegetative', elem2: null, chance: 0.3 },
-                'cannabis_ruderalis_seedling': { elem1: 'cannabis_ruderalis_vegetative', elem2: null, chance: 0.3 },
-                
-                // Boost growth of all cannabis vegetative plants
-                'cannabis_sativa_vegetative': { elem1: 'cannabis_sativa_flowering', elem2: null, chance: 0.25 },
-                'cannabis_indica_vegetative': { elem1: 'cannabis_indica_flowering', elem2: null, chance: 0.25 },
-                'cannabis_ruderalis_vegetative': { elem1: 'cannabis_ruderalis_flowering', elem2: null, chance: 0.25 },
-                
-                // Boost growth of all strain seedlings
-                ...Object.keys(cannabisStrains).reduce((reactions, strain) => {
-                    reactions[`${strain}_seedling`] = { elem1: `${strain}_vegetative`, elem2: null, chance: 0.3 };
-                    reactions[`${strain}_vegetative`] = { elem1: `${strain}_flowering`, elem2: null, chance: 0.25 };
-                    return reactions;
-                }, {})
-            },
-            desc: 'Plant nutrients - accelerates plant growth stages'
+            reactions: {},
+            desc: 'Plant nutrients - SUPERCHARGES growth into massive plants!'
         };
     }
 
-    // Scissors tool
+    // Add nutrient reactions for all cannabis growth stages
+    const nutrientReactions = {};
+    Object.keys(cannabisStrains).forEach(strain => {
+        nutrientReactions[`${strain}_seedling`] = { elem1: `${strain}_vegetative`, elem2: null, chance: 0.4 };
+        nutrientReactions[`${strain}_vegetative`] = { elem1: `${strain}_large`, elem2: null, chance: 0.35 };
+        nutrientReactions[strain] = { elem1: `${strain}_large`, elem2: null, chance: 0.3 };
+        nutrientReactions[`${strain}_flowering`] = { elem1: `${strain}_large`, elem2: null, chance: 0.3 };
+        nutrientReactions[`${strain}_large`] = { elem1: `${strain}_giant`, elem2: null, chance: 0.25 };
+    });
+    
+    elements.plant_nutrients.reactions = nutrientReactions;
+
+    // --------------------------------------------------------------------------
+    // 7. ENHANCED TOOLS FOR MASSIVE PLANTS
+    // --------------------------------------------------------------------------
+    
+    // Scissors for harvesting massive plants
     if (!elements.scissors) {
         elements.scissors = {
             color: ['#9e9e9e', '#757575', '#616161'],
@@ -1061,126 +912,1022 @@
             hardness: 0.9,
             breakInto: 'scrap_metal',
             tool: function(pixel) {
-                const harvestMap = {
-                    // Base cannabis species
-                    'cannabis_sativa': 'cannabis_flower',
-                    'cannabis_indica': 'cannabis_flower',
-                    'cannabis_ruderalis': 'cannabis_flower',
-                    
-                    // Other plants
-                    'papaver_somniferum': 'opium_latex',
-                    'coca_boliviana': 'coca_leaves',
-                    'coca_colombiana': 'coca_leaves'
-                };
+                const harvestMap = {};
                 
                 // Add all strain harvesting
                 Object.keys(cannabisStrains).forEach(strain => {
                     harvestMap[strain] = `${strain}_flower`;
                     harvestMap[`${strain}_flowering`] = `${strain}_flower`;
+                    harvestMap[`${strain}_large`] = `${strain}_flower`;
+                    harvestMap[`${strain}_giant`] = `${strain}_flower`;
                 });
                 
                 if (harvestMap[pixel.element]) {
-                    changePixel(pixel, harvestMap[pixel.element]);
+                    // For giant plants, create extra flowers
+                    if (pixel.element.includes('_giant')) {
+                        changePixel(pixel, `${pixel.element.split('_giant')[0]}_flower`);
+                        for (let i = 0; i < 6; i++) {
+                            const x = pixel.x + (Math.random() * 8 - 4);
+                            const y = pixel.y + (Math.random() * 8 - 4);
+                            if (x >= 0 && x < width && y >= 0 && y < height) {
+                                if (!isEmpty(x, y, true)) continue;
+                                createPixel(`${pixel.element.split('_giant')[0]}_flower`, x, y);
+                            }
+                        }
+                    } else {
+                        changePixel(pixel, harvestMap[pixel.element]);
+                    }
                     return true;
                 }
                 return false;
             },
-            desc: 'Scissors - better for harvesting delicate plants'
+            desc: 'Scissors - perfect for harvesting massive cannabis plants'
         };
     }
 
-    // Grow Light
+    // Enhanced Grow Light
     if (!elements.grow_light) {
         elements.grow_light = {
             color: ['#fff59d', '#fff176', '#ffee58'],
             behavior: [
-                "XX|CR:plant_nutrients%0.1 AND M2|XX",
-                "CR:plant_nutrients%0.1 AND M2|XX|CR:plant_nutrients%0.1 AND M2",
-                "XX|M1|XX"
+                "XX|CR:plant_nutrients%0.2 AND M2|XX",
+                "CR:plant_nutrients%0.2 AND M2|XX|CR:plant_nutrients%0.2 AND M2",
+                "XX|M1 AND CR:plant_nutrients%0.1|XX"
             ],
             category: 'machines',
             state: 'solid',
             density: 2500,
-            temp: 40,
+            temp: 25,
             tempHigh: 200,
             stateHigh: 'molten_steel',
             conduct: 0.8,
-            desc: 'Grow light - promotes plant growth, generates heat'
+            desc: 'Enhanced grow light - promotes MASSIVE plant growth'
         };
     }
 
     // --------------------------------------------------------------------------
-    // UPDATE UNIVERSAL PRECURSOR TO INCLUDE NEW GROWTH STAGES
+    // 8. PRECURSORS & REAGENTS
     // --------------------------------------------------------------------------
-    
-    if (elements.universal_precursor) {
-        // Add growth stages to universal precursor reactions
-        const growthStages = [];
-        
-        // Add base cannabis growth stages
-        ['cannabis_sativa', 'cannabis_indica', 'cannabis_ruderalis'].forEach(species => {
-            growthStages.push(
-                `${species}_seedling`,
-                `${species}_vegetative`, 
-                `${species}_flowering`
-            );
-        });
-        
-        // Add all strain growth stages
-        Object.keys(cannabisStrains).forEach(strain => {
-            growthStages.push(
-                `${strain}_seedling`,
-                `${strain}_vegetative`, 
-                `${strain}_flowering`,
-                `${strain}_flower`
-            );
-        });
-        
-        if (elements.universal_precursor.reactions.dirt) {
-            elements.universal_precursor.reactions.dirt.elem1 = 
-                elements.universal_precursor.reactions.dirt.elem1.concat(growthStages);
+    const precursors = {
+        ephedrine: {
+            colors: ['#ffffff', '#fafafa', '#f5f5f5'],
+            density: 1180,
+            tempHigh: 255,
+            stateHigh: 'smoke',
+            reactions: {
+                hydrogen: { elem1: 'pseudoephedrine', elem2: null, chance: 0.15, tempMin: 120 },
+                catalyst: { elem1: 'pseudoephedrine', elem2: null, chance: 0.12, tempMin: 100 },
+                red_phosphorus: { elem1: 'meth_intermediate', elem2: null, chance: 0.15, tempMin: 120 },
+                iodine: { elem1: 'meth_intermediate', elem2: null, chance: 0.12, tempMin: 110 },
+                lithium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.2, tempMin: 100 },
+                sodium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.18, tempMin: 100 }
+            },
+            desc: 'Ephedrine HCl - white crystalline'
+        },
+        pseudoephedrine: {
+            colors: ['#f5f5f5', '#fafafa', '#eeeeee'],
+            density: 1200,
+            tempHigh: 260,
+            stateHigh: 'smoke',
+            reactions: {
+                red_phosphorus: { elem1: 'meth_intermediate', elem2: null, chance: 0.15, tempMin: 120 },
+                iodine: { elem1: 'meth_intermediate', elem2: null, chance: 0.12, tempMin: 110 },
+                lithium_metal: { elem1: 'methamphetamine', elem2: null, chance: 0.2, tempMin: 100 }
+            },
+            desc: 'Pseudoephedrine - white powder'
+        },
+        nicotine: {
+            colors: ['#f5f5f5', '#e0e0e0'],
+            density: 1010,
+            liquid: true,
+            viscosity: 2500,
+            tempHigh: 247,
+            stateHigh: 'nicotine_vapor',
+            reactions: {
+                water: { elem1: 'nicotine_solution', elem2: null, chance: 0.2 }
+            },
+            desc: 'Nicotine - oily liquid'
+        },
+        caffeine: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1230,
+            tempHigh: 238,
+            stateHigh: 'smoke',
+            reactions: {
+                water: { elem1: 'tea', elem2: null, chance: 0.15 }
+            },
+            desc: 'Caffeine - white powder, stimulant'
+        },
+        lsa: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1280,
+            tempHigh: 180,
+            stateHigh: 'smoke',
+            reactions: {
+                ethanol: { elem1: 'lsa_solution', elem2: null, chance: 0.15 },
+                lithium_aluminum_hydride: { elem1: 'lsd', elem2: null, chance: 0.25, tempMin: 80 }
+            },
+            desc: 'Lysergic acid amide'
+        },
+        theobromine: {
+            colors: ['#f5f5f5', '#ffffff'],
+            density: 1340,
+            tempHigh: 290,
+            stateHigh: 'smoke',
+            desc: 'Theobromine - chocolate alkaloid'
+        },
+        ammonia: {
+            colors: ['#e1f5fe', '#b3e5fc'],
+            density: 682,
+            liquid: true,
+            viscosity: 600,
+            tempHigh: -33,
+            stateHigh: 'ammonia_gas',
+            reactions: {
+                nitrogen: { elem1: 'ammonia', elem2: null, chance: 0.1, tempMin: 400 },
+                hydrogen: { elem1: 'ammonia', elem2: null, chance: 0.12, tempMin: 450 }
+            },
+            desc: 'Ammonia - pungent liquid'
+        },
+        nitric_acid: {
+            colors: ['#e1f5fe', '#b3e5fc'],
+            density: 1510,
+            liquid: true,
+            viscosity: 1200,
+            tempHigh: 83,
+            stateHigh: 'nitrogen_dioxide',
+            reactions: {
+                ammonia: { elem1: 'nitric_acid', elem2: null, chance: 0.15, tempMin: 200 }
+            },
+            desc: 'Nitric acid - strong oxidizer'
+        },
+        glycerol: {
+            colors: ['#e1f5fe', '#b3e5fc'],
+            density: 1261,
+            liquid: true,
+            viscosity: 1500,
+            tempHigh: 290,
+            stateHigh: 'steam',
+            reactions: {
+                fat: { elem1: 'glycerol', elem2: 'fatty_acid', chance: 0.2, tempMin: 100 }
+            },
+            desc: 'Glycerol - sweet, viscous'
+        },
+        phenylacetone: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1015,
+            liquid: true,
+            viscosity: 1200,
+            tempHigh: 216,
+            stateHigh: 'smoke',
+            reactions: {
+                methylamine: { elem1: 'methamphetamine', elem2: null, chance: 0.3, tempMin: 80 },
+                ammonia: { elem1: 'amphetamine', elem2: null, chance: 0.25, tempMin: 85 }
+            },
+            desc: 'P2P - amphetamine precursor'
+        },
+        safrole: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1096,
+            liquid: true,
+            viscosity: 1100,
+            tempHigh: 234,
+            stateHigh: 'smoke',
+            reactions: {
+                hydrogen: { elem1: 'mdp2p', elem2: null, chance: 0.25, tempMin: 100 },
+                potassium_permanganate: { elem1: 'mdp2p', elem2: null, chance: 0.3, tempMin: 90 }
+            },
+            desc: 'Safrole - MDMA precursor oil'
+        },
+        mdp2p: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1040,
+            liquid: true,
+            viscosity: 1600,
+            tempHigh: 130,
+            stateHigh: 'mdma_smoke',
+            reactions: {
+                methylamine: { elem1: 'mdma', elem2: null, chance: 0.35, tempMin: 80 },
+                ammonia: { elem1: 'mda', elem2: null, chance: 0.3, tempMin: 85 }
+            },
+            desc: 'MDP2P - MDMA intermediate'
+        },
+        ergotamine: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1320,
+            tempHigh: 213,
+            stateHigh: 'smoke',
+            reactions: {
+                lithium_aluminum_hydride: { elem1: 'lsd', elem2: null, chance: 0.3, tempMin: 70 },
+                diethyl_ether: { elem1: 'lsd', elem2: null, chance: 0.25, tempMin: 60 }
+            },
+            desc: 'Ergotamine - LSD precursor'
+        },
+        lysergic_acid: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1280,
+            tempHigh: 240,
+            stateHigh: 'smoke',
+            reactions: {
+                diethyl_ether: { elem1: 'lsd', elem2: null, chance: 0.35, tempMin: 50 },
+                thionyl_chloride: { elem1: 'lsd', elem2: null, chance: 0.4, tempMin: 60 }
+            },
+            desc: 'Lysergic acid - LSD precursor'
+        },
+        tryptamine: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1090,
+            tempHigh: 174,
+            stateHigh: 'smoke',
+            reactions: {
+                dimethylformamide: { elem1: 'dmt', elem2: null, chance: 0.3, tempMin: 80 },
+                formaldehyde: { elem1: 'dmt', elem2: null, chance: 0.25, tempMin: 90 }
+            },
+            desc: 'Tryptamine - DMT precursor'
+        },
+        indole: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1175,
+            tempHigh: 254,
+            stateHigh: 'smoke',
+            reactions: {
+                formaldehyde: { elem1: 'tryptamine', elem2: null, chance: 0.25, tempMin: 100 }
+            },
+            desc: 'Indole - tryptamine precursor'
+        },
+        piperidine_precursor: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 862,
+            liquid: true,
+            viscosity: 800,
+            tempHigh: 106,
+            stateHigh: 'smoke',
+            reactions: {
+                phenylacetone: { elem1: 'pcp', elem2: null, chance: 0.3, tempMin: 80 },
+                benzene: { elem1: 'pcp', elem2: null, chance: 0.25, tempMin: 90 }
+            },
+            desc: 'Piperidine - PCP precursor'
+        },
+        cyclohexanone: {
+            colors: ['#e1f5fe', '#b3e5fc'],
+            density: 948,
+            liquid: true,
+            viscosity: 1000,
+            tempHigh: 156,
+            stateHigh: 'smoke',
+            reactions: {
+                piperidine: { elem1: 'ketamine', elem2: null, chance: 0.3, tempMin: 70 },
+                methylamine: { elem1: 'ketamine', elem2: null, chance: 0.25, tempMin: 80 }
+            },
+            desc: 'Cyclohexanone - ketamine precursor'
+        },
+        acetic_acid_anhydride: {
+            colors: ['#ffffff', '#f5f5f5'],
+            density: 1080,
+            liquid: true,
+            viscosity: 900,
+            tempHigh: 140,
+            stateHigh: 'smoke',
+            reactions: {
+                morphine: { elem1: 'heroin', elem2: 'acetic_acid', chance: 0.35, tempMin: 85 },
+                morphine_base: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.35, tempMin: 85 }
+            },
+            desc: 'Acetic anhydride - acetylating agent'
+        },
+        thebaine: {
+            colors: ['#bcaaa4', '#a1887f'],
+            density: 1300,
+            tempHigh: 193,
+            stateHigh: 'smoke',
+            reactions: {
+                hydrogen: { elem1: 'oxycodone', elem2: null, chance: 0.3, tempMin: 100 },
+                sodium_borohydride: { elem1: 'hydrocodone', elem2: null, chance: 0.28, tempMin: 90 }
+            },
+            desc: 'Thebaine - opioid precursor'
+        },
+        acrylfentanyl_precursor: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1150,
+            tempHigh: 120,
+            stateHigh: 'smoke',
+            reactions: {
+                aniline: { elem1: 'fentanyl', elem2: null, chance: 0.35, tempMin: 70 },
+                phenyl: { elem1: 'carfentanil', elem2: null, chance: 0.3, tempMin: 80 }
+            },
+            desc: 'Fentanyl precursor'
+        },
+        cathinone_precursor: {
+            colors: ['#ffffff', '#fafafa'],
+            density: 1190,
+            tempHigh: 220,
+            stateHigh: 'smoke',
+            reactions: {
+                methylamine: { elem1: 'mephedrone', elem2: null, chance: 0.3, tempMin: 80 },
+                ethanol: { elem1: 'methylone', elem2: null, chance: 0.28, tempMin: 85 }
+            },
+            desc: 'Cathinone precursor base'
+        },
+        gamma_butyrolactone: {
+            colors: ['#e1f5fe', '#b3e5fc'],
+            density: 1130,
+            liquid: true,
+            viscosity: 1500,
+            tempHigh: 204,
+            stateHigh: 'steam',
+            reactions: {
+                sodium_hydroxide: { elem1: 'ghb', elem2: null, chance: 0.35 },
+                water: { elem1: 'ghb', elem2: null, chance: 0.25, tempMin: 80 }
+            },
+            desc: 'GBL - GHB precursor'
+        },
+        synthetic_cannabinoid_base: {
+            colors: ['#fff9c4', '#ffecb3'],
+            density: 1180,
+            tempHigh: 178,
+            stateHigh: 'synthetic_cannabinoid_smoke',
+            reactions: {
+                indole: { elem1: 'jwh_018', elem2: null, chance: 0.3, tempMin: 90 }
+            },
+            desc: 'Synthetic cannabinoid base'
         }
+    };
+
+    Object.entries(precursors).forEach(([id, cfg]) => {
+        elements[id] = {
+            color: cfg.colors,
+            behavior: cfg.liquid ? LIQ : PW,
+            category: 'precursors',
+            state: cfg.liquid ? 'liquid' : 'solid',
+            density: cfg.density,
+            viscosity: cfg.viscosity,
+            tempHigh: cfg.tempHigh + 100,
+            stateHigh: cfg.stateHigh,
+            burn: 0,
+            burnTime: 0,
+            conduct: 0.03,
+            reactions: cfg.reactions,
+            desc: cfg.desc
+        };
+    });
+
+    // --------------------------------------------------------------------------
+    // 9. INTERMEDIATES & FINAL COMPOUNDS
+    // --------------------------------------------------------------------------
+    const intermediates = {
+        cocaine_sulfate: {
+            colors: ['#f5f5f5', '#fafafa'],
+            behavior: PW,
+            category: 'precursors',
+            state: 'solid',
+            density: 1180,
+            tempHigh: 180,
+            stateHigh: 'smoke',
+            reactions: {
+                sodium_hydroxide: { elem1: 'cocaine_base', elem2: null, chance: 0.3 },
+                ammonium_hydroxide: { elem1: 'cocaine_base', elem2: null, chance: 0.25 },
+                potassium_carbonate: { elem1: 'cocaine_base', elem2: null, chance: 0.28 }
+            },
+            desc: 'Cocaine sulfate - intermediate'
+        },
+        cocaine_base: {
+            colors: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'precursors',
+            state: 'solid',
+            density: 1150,
+            tempHigh: 98,
+            stateHigh: 'crack_smoke',
+            reactions: {
+                hydrochloric_acid: { elem1: 'cocaine', elem2: null, chance: 0.35 },
+                acetic_acid: { elem1: 'cocaine', elem2: null, chance: 0.3 }
+            },
+            desc: 'Cocaine freebase'
+        },
+        meth_intermediate: {
+            colors: ['#e0e0e0', '#eeeeee'],
+            behavior: LIQ,
+            viscosity: 1800,
+            category: 'precursors',
+            state: 'liquid',
+            density: 980,
+            tempHigh: 150,
+            stateHigh: 'meth_smoke',
+            reactions: {
+                hydrochloric_acid: { elem1: 'methamphetamine', elem2: null, chance: 0.35 },
+                sulfuric_acid: { elem1: 'methamphetamine', elem2: null, chance: 0.3 }
+            },
+            desc: 'Methamphetamine freebase'
+        },
+        mdma_intermediate: {
+            colors: ['#fff9c4', '#ffecb3'],
+            behavior: LIQ,
+            viscosity: 1600,
+            category: 'precursors',
+            state: 'liquid',
+            density: 1040,
+            tempHigh: 130,
+            stateHigh: 'mdma_smoke',
+            reactions: {
+                methylamine: { elem1: 'mdma', elem2: null, chance: 0.25, tempMin: 100 },
+                hydrochloric_acid: { elem1: 'mdma', elem2: null, chance: 0.3 }
+            },
+            desc: 'MDP2P - MDMA precursor'
+        },
+        heroin_base: {
+            colors: ['#8d6e63', '#a1887f', '#795548'],
+            behavior: PW,
+            category: 'precursors',
+            state: 'solid',
+            density: 1320,
+            tempHigh: 170,
+            stateHigh: 'heroin_smoke',
+            reactions: {
+                hydrochloric_acid: { elem1: 'heroin', elem2: null, chance: 0.3 },
+                water: { elem1: 'heroin_solution', elem2: null, chance: 0.15 },
+                citric_acid: { elem1: 'heroin', elem2: null, chance: 0.25 }
+            },
+            desc: 'Heroin base - #3 form'
+        },
+        morphine_base: {
+            colors: ['#bcaaa4', '#a1887f', '#8d6e63'],
+            behavior: PW,
+            category: 'precursors',
+            state: 'solid',
+            density: 1230,
+            tempHigh: 197,
+            stateHigh: 'morphine_smoke',
+            reactions: {
+                acetic_anhydride: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.35, tempMin: 85 },
+                acetic_acid_anhydride: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.35, tempMin: 85 }
+            },
+            desc: 'Morphine base'
+        },
+        mda_intermediate: {
+            colors: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'precursors',
+            state: 'solid',
+            density: 1180,
+            tempHigh: 187,
+            stateHigh: 'smoke',
+            reactions: {
+                formaldehyde: { elem1: 'mdma', elem2: null, chance: 0.3, tempMin: 80 }
+            },
+            desc: 'MDA - MDMA precursor'
+        }
+    };
+
+    Object.entries(intermediates).forEach(([id, cfg]) => {
+        elements[id] = {
+            color: cfg.colors,
+            behavior: cfg.behavior,
+            category: cfg.category,
+            state: cfg.state,
+            density: cfg.density,
+            viscosity: cfg.viscosity,
+            tempHigh: cfg.tempHigh + 100,
+            stateHigh: cfg.stateHigh,
+            burn: 0,
+            burnTime: 0,
+            conduct: 0.03,
+            reactions: cfg.reactions,
+            desc: cfg.desc
+        };
+    });
+
+    // --------------------------------------------------------------------------
+    // 10. FINAL COMPOUNDS
+    // --------------------------------------------------------------------------
+    const finalCompounds = {
+        cocaine: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1200,
+            tempHigh: 195,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'cocaine_solution', elem2: null, chance: 0.2 },
+                baking_soda: { elem1: 'crack_slurry', elem2: null, chance: 0.25 },
+                sodium_hydroxide: { elem1: 'cocaine_base', elem2: null, chance: 0.3 }
+            },
+            desc: 'Schedule II - Cocaine HCl'
+        },
+        crack: {
+            color: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1150,
+            tempHigh: 98,
+            stateHigh: 'crack_smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Crack cocaine'
+        },
+        methamphetamine: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1180,
+            tempHigh: 170,
+            stateHigh: 'meth_smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'meth_solution', elem2: null, chance: 0.2 }
+            },
+            desc: 'Schedule II - Methamphetamine'
+        },
+        amphetamine: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1150,
+            tempHigh: 200,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Amphetamine'
+        },
+        mdma: {
+            color: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1200,
+            tempHigh: 148,
+            stateHigh: 'mdma_smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'mdma_solution', elem2: null, chance: 0.2 }
+            },
+            desc: 'Schedule I - MDMA'
+        },
+        mda: {
+            color: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1190,
+            tempHigh: 187,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                formaldehyde: { elem1: 'mdma', elem2: null, chance: 0.3, tempMin: 80 }
+            },
+            desc: 'Schedule I - MDA'
+        },
+        heroin: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1350,
+            tempHigh: 173,
+            stateHigh: 'heroin_smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'heroin_solution', elem2: null, chance: 0.2 }
+            },
+            desc: 'Schedule I - Heroin'
+        },
+        morphine: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1320,
+            tempHigh: 255,
+            stateHigh: 'morphine_smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                acetic_anhydride: { elem1: 'heroin_base', elem2: 'acetic_acid', chance: 0.3, tempMin: 85 }
+            },
+            desc: 'Schedule II - Morphine'
+        },
+        psilocybin: {
+            color: ['#bcaaa4', '#a1887f'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1280,
+            tempHigh: 220,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'psilocybin_tea', elem2: null, chance: 0.15, tempMin: 80 }
+            },
+            desc: 'Schedule I - Psilocybin'
+        },
+        psilocin: {
+            color: ['#bcaaa4', '#a1887f'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1270,
+            tempHigh: 173,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Psilocin'
+        },
+        mescaline: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1290,
+            tempHigh: 183,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                water: { elem1: 'mescaline_tea', elem2: null, chance: 0.15, tempMin: 80 }
+            },
+            desc: 'Schedule I - Mescaline'
+        },
+        lsd: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1300,
+            tempHigh: 83,
+            stateHigh: 'lsd_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - LSD'
+        },
+        dmt: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1200,
+            tempHigh: 160,
+            stateHigh: 'dmt_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - DMT'
+        },
+        fentanyl: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1400,
+            tempHigh: 87,
+            stateHigh: 'fentanyl_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Fentanyl'
+        },
+        carfentanil: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1420,
+            tempHigh: 91,
+            stateHigh: 'fentanyl_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Carfentanil'
+        },
+        pcp: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1240,
+            tempHigh: 233,
+            stateHigh: 'pcp_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - PCP'
+        },
+        ketamine: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1250,
+            tempHigh: 262,
+            stateHigh: 'ketamine_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule III - Ketamine'
+        },
+        ghb: {
+            color: ['#e1f5fe', '#b3e5fc'],
+            behavior: LIQ,
+            viscosity: 1800,
+            category: 'research_compounds',
+            state: 'liquid',
+            density: 1120,
+            tempHigh: 100,
+            stateHigh: 'steam',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - GHB'
+        },
+        gbl: {
+            color: ['#e1f5fe', '#b3e5fc'],
+            behavior: LIQ,
+            viscosity: 1500,
+            category: 'research_compounds',
+            state: 'liquid',
+            density: 1130,
+            tempHigh: 204,
+            stateHigh: 'steam',
+            burn: 0, burnTime: 0,
+            reactions: {
+                sodium_hydroxide: { elem1: 'ghb', elem2: null, chance: 0.35 },
+                water: { elem1: 'ghb', elem2: null, chance: 0.25, tempMin: 80 }
+            },
+            desc: 'Schedule I - GBL'
+        },
+        codeine: {
+            color: ['#f5f5f5', '#ffffff'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1340,
+            tempHigh: 157,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                morphine: { elem1: 'codeine', elem2: null, chance: 0.15, tempMin: 80 }
+            },
+            desc: 'Schedule II - Codeine'
+        },
+        oxycodone: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1360,
+            tempHigh: 219,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Oxycodone'
+        },
+        hydrocodone: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1340,
+            tempHigh: 198,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule II - Hydrocodone'
+        },
+        mephedrone: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1150,
+            tempHigh: 194,
+            stateHigh: 'mephedrone_smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Mephedrone'
+        },
+        methylone: {
+            color: ['#f5f5f5', '#ffffff'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1220,
+            tempHigh: 201,
+            stateHigh: 'methylone_smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Methylone'
+        },
+        jwh_018: {
+            color: ['#fff9c4', '#ffecb3'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1180,
+            tempHigh: 178,
+            stateHigh: 'synthetic_cannabinoid_smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - JWH-018'
+        },
+        _2c_b: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1260,
+            tempHigh: 235,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - 2C-B'
+        },
+        _4_aco_dmt: {
+            color: ['#ffccbc', '#ffab91'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1290,
+            tempHigh: 185,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - 4-AcO-DMT'
+        },
+        tramadol: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1310,
+            tempHigh: 180,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule IV - Tramadol'
+        },
+        ayahuasca_brew: {
+            color: ['#8d6e63', '#795548'],
+            behavior: LIQ,
+            viscosity: 1800,
+            category: 'research_compounds',
+            state: 'liquid',
+            density: 1050,
+            tempHigh: 100,
+            stateHigh: 'steam',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Ayahuasca brew'
+        },
+        kava_extract: {
+            color: ['#827717', '#9e9d24'],
+            behavior: LIQ,
+            viscosity: 2200,
+            category: 'research_compounds',
+            state: 'liquid',
+            density: 1120,
+            tempHigh: 95,
+            stateHigh: 'steam',
+            burn: 0, burnTime: 0,
+            desc: 'Unscheduled - Kava extract'
+        },
+        salvinorin_a: {
+            color: ['#004d40', '#00695c'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1250,
+            tempHigh: 238,
+            stateHigh: 'salvinorin_vapor',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Salvinorin A'
+        },
+        ibogaine: {
+            color: ['#3e2723', '#4e342e'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1320,
+            tempHigh: 152,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Schedule I - Ibogaine'
+        },
+        cathinone: {
+            color: ['#ffffff', '#fafafa'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1190,
+            tempHigh: 220,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            reactions: {
+                methylamine: { elem1: 'mephedrone', elem2: null, chance: 0.3, tempMin: 80 }
+            },
+            desc: 'Cathinone - stimulant from khat'
+        },
+        mitragynine: {
+            color: ['#8d6e63', '#795548'],
+            behavior: PW,
+            category: 'research_compounds',
+            state: 'solid',
+            density: 1250,
+            tempHigh: 240,
+            stateHigh: 'smoke',
+            burn: 0, burnTime: 0,
+            desc: 'Mitragynine - kratom alkaloid'
+        }
+    };
+
+    Object.entries(finalCompounds).forEach(([id, cfg]) => {
+        if (!elements[id]) {
+            elements[id] = {
+                color: cfg.color,
+                behavior: cfg.behavior,
+                category: cfg.category,
+                state: cfg.state,
+                density: cfg.density,
+                viscosity: cfg.viscosity,
+                tempHigh: cfg.tempHigh + 150,
+                stateHigh: cfg.stateHigh,
+                burn: 0,
+                burnTime: 0,
+                conduct: 0.02,
+                reactions: cfg.reactions,
+                desc: cfg.desc
+            };
+        }
+    });
+
+    // --------------------------------------------------------------------------
+    // 11. UNIVERSAL PRECURSOR
+    // --------------------------------------------------------------------------
+    if (!elements.universal_precursor) {
+        elements.universal_precursor = {
+            color: ['#9c27b0', '#8e24aa', '#7b1fa2'],
+            behavior: PW,
+            category: 'special',
+            state: 'solid',
+            density: 1000,
+            reactions: {
+                dirt: { 
+                    elem1: [
+                        ...Object.keys(cannabisStrains),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_seedling`),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_vegetative`),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_large`),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_giant`),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_flowering`),
+                        ...Object.keys(cannabisStrains).map(strain => `${strain}_flower`),
+                        'ephedrine', 'pseudoephedrine', 'nicotine', 'caffeine', 'lsa',
+                        'cocaine', 'methamphetamine', 'heroin', 'mdma', 'lsd',
+                        'psilocybin', 'mescaline', 'dmt', 'fentanyl', 'ketamine'
+                    ], 
+                    elem2: null, 
+                    chance: 0.1 
+                },
+                salt: { 
+                    elem1: [
+                        'ephedrine', 'pseudoephedrine', 'nicotine', 'caffeine', 'lsa',
+                        'sodium_hydroxide', 'ammonium_hydroxide', 'hydrochloric_acid',
+                        'acetic_anhydride', 'methylamine', 'potassium_permanganate'
+                    ], 
+                    elem2: null, 
+                    chance: 0.08 
+                },
+                sugar: { 
+                    elem1: [
+                        'methamphetamine', 'amphetamine', 'mdma', 'mda', 'heroin', 'morphine',
+                        'fentanyl', 'carfentanil', 'lsd', 'psilocybin', 'psilocin',
+                        'cocaine', 'crack', 'pcp', 'ketamine', 'dmt', 'ghb', 'gbl'
+                    ], 
+                    elem2: null, 
+                    chance: 0.05 
+                },
+                water: {
+                    elem1: [
+                        'cocaine', 'methamphetamine', 'heroin', 'mdma', 'lsd'
+                    ],
+                    elem2: null,
+                    chance: 0.03
+                },
+                fire: {
+                    elem1: [
+                        'crack', 'heroin_base', 'cocaine_base', 'methamphetamine'
+                    ],
+                    elem2: null,
+                    chance: 0.04
+                },
+                plant_nutrients: {
+                    elem1: 'plant_nutrients',
+                    elem2: null,
+                    chance: 0.1
+                }
+            },
+            desc: 'Universal precursor - creates everything including MASSIVE cannabis plants'
+        };
     }
 
     // --------------------------------------------------------------------------
-    // CONSOLE LOG - COMBINED FEATURES
+    // 12. CONSOLE LOG - COMPLETE SYSTEM
     // --------------------------------------------------------------------------
     
-    console.log('🔥 CHEMRESEARCH v3.2 - COMPLETE WITH REALISTIC CANNABIS GROWTH');
-    console.log('='.repeat(80));
+    console.log('🌿 CHEMRESEARCH v3.3 - COMPLETE MASSIVE PLANTS SYSTEM!');
+    console.log('='.repeat(70));
+    console.log('🔥 COMPLETE CHEMISTRY:');
+    console.log('  ✓ 500+ chemical elements and compounds');
+    console.log('  ✓ Complete synthesis pathways for all research compounds');
+    console.log('  ✓ Universal precursor creates everything');
     console.log('');
-    console.log('🌱 REALISTIC CANNABIS GROWTH SYSTEM:');
-    console.log('  ✓ 3 Growth stages: seedling → vegetative → flowering');
-    console.log('  ✓ Temperature requirements: seeds need 18°C+ to sprout');
-    console.log('  ✓ Soil moisture affects growth rate');
-    console.log('  ✓ Fertilizer significantly boosts growth');
-    console.log('  ✓ Strain-specific growth characteristics');
-    console.log('  ✓ ' + Object.keys(cannabisStrains).length + ' cannabis strains with unique growth patterns');
+    console.log('🌱 MASSIVE CANNABIS PLANTS:');
+    console.log('  ✓ ' + Object.keys(cannabisStrains).length + ' cannabis strains');
+    console.log('  ✓ 4 Growth stages: seedling → vegetative → LARGE → GIANT');
+    console.log('  ✓ Plants grow 12-16+ pixels TALL (like your screenshot)');
+    console.log('  ✓ Giant plants yield 8+ flowers when harvested');
+    console.log('  ✓ Enhanced tools: scissors, plant_nutrients, grow_light');
     console.log('');
-    console.log('🛠 NEW GROWTH TOOLS:');
-    console.log('  • Scissors - better harvesting tool');
-    console.log('  • Plant nutrients - growth accelerator');
-    console.log('  • Grow light - indoor cultivation support');
+    console.log('🚀 QUICK MASSIVE GROWTH:');
+    console.log('  seed_og_kush + plant_nutrients = instant vegetative');
+    console.log('  og_kush + plant_nutrients = instant LARGE plant');
+    console.log('  og_kush_large + plant_nutrients = instant GIANT plant');
+    console.log('  GIANT plants = 8+ flowers + 3 seeds when harvested!');
     console.log('');
-    console.log('🌿 GROWTH PROCESS:');
-    console.log('  1. Plant seed in warm soil (18°C+)');
-    console.log('  2. Seed sprouts into seedling');
-    console.log('  3. Seedling grows into vegetative plant');
-    console.log('  4. Vegetative plant matures into flowering stage');
-    console.log('  5. Use knife/scissors on flowering plant to harvest buds');
-    console.log('');
-    console.log('💧 OPTIMAL CONDITIONS:');
-    console.log('  • Wet soil > dry soil');
-    console.log('  • Fertilizer = much faster growth');
-    console.log('  • Warm temperatures (18-30°C)');
-    console.log('  • Grow lights for indoor setups');
-    console.log('');
-    console.log('📦 COMBINED ELEMENT COUNTS:');
-    console.log('  • 500+ total elements including all chemistry');
-    console.log('  • ' + Object.keys(cannabisStrains).length + ' cannabis strains × 4 stages each');
-    console.log('  • Complete synthesis pathways for all research compounds');
-    console.log('  • Realistic plant growth mechanics');
-    console.log('');
-    console.log('✅ ChemResearch v3.2 - Complete chemistry + realistic cannabis growth!');
+    console.log('✅ COMPLETE SYSTEM READY - Chemistry + Massive Plants!');
 
 })();
