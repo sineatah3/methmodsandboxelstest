@@ -248,11 +248,15 @@
                 if (!pixel.growth) pixel.growth = 0;
                 pixel.growth++;
                 
+                // Grow upward every 80 ticks
                 if (pixel.growth >= 80) {
-                    if (pixelMap[pixel.x] && pixelMap[pixel.x][pixel.y - 1]) {
-                        const above = pixelMap[pixel.x][pixel.y - 1];
-                        if (!above || isEmpty(pixel.x, pixel.y - 1)) {
-                            createPixel(`${strainId}_vegetative`, pixel.x, pixel.y - 1);
+                    pixel.growth = 0;
+                    // Check if space above is empty
+                    if (pixel.y > 0) {
+                        const aboveX = pixel.x;
+                        const aboveY = pixel.y - 1;
+                        if (isEmpty(aboveX, aboveY)) {
+                            createPixel(`${strainId}_vegetative`, aboveX, aboveY);
                             changePixel(pixel, `${strainId}_stem`);
                         }
                     }
@@ -277,11 +281,14 @@
                 if (!pixel.growth) pixel.growth = 0;
                 pixel.growth++;
                 
+                // Continue growing upward
                 if (pixel.growth >= 60) {
-                    if (pixelMap[pixel.x] && pixelMap[pixel.x][pixel.y - 1]) {
-                        const above = pixelMap[pixel.x][pixel.y - 1];
-                        if (!above || isEmpty(pixel.x, pixel.y - 1)) {
-                            createPixel(`${strainId}_large`, pixel.x, pixel.y - 1);
+                    pixel.growth = 0;
+                    if (pixel.y > 0) {
+                        const aboveX = pixel.x;
+                        const aboveY = pixel.y - 1;
+                        if (isEmpty(aboveX, aboveY)) {
+                            createPixel(`${strainId}_large`, aboveX, aboveY);
                             changePixel(pixel, `${strainId}_stem`);
                         }
                     }
@@ -310,20 +317,26 @@
                 if (!pixel.growth) pixel.growth = 0;
                 pixel.growth++;
                 
+                // Continue growing even taller
                 if (pixel.growth >= 50) {
-                    if (pixelMap[pixel.x] && pixelMap[pixel.x][pixel.y - 1]) {
-                        const above = pixelMap[pixel.x][pixel.y - 1];
-                        if (!above || isEmpty(pixel.x, pixel.y - 1)) {
-                            createPixel(`${strainId}_flowering`, pixel.x, pixel.y - 1);
+                    pixel.growth = 0;
+                    if (pixel.y > 0) {
+                        const aboveX = pixel.x;
+                        const aboveY = pixel.y - 1;
+                        if (isEmpty(aboveX, aboveY)) {
+                            createPixel(`${strainId}_flowering`, aboveX, aboveY);
                             changePixel(pixel, `${strainId}_stem`);
                         }
                     }
                 }
                 
+                // Spawn side branches occasionally
                 if (pixel.growth % 20 === 0 && Math.random() < 0.3) {
                     const dir = Math.random() < 0.5 ? -1 : 1;
-                    if (isEmpty(pixel.x + dir, pixel.y)) {
-                        createPixel(`${strainId}_branch`, pixel.x + dir, pixel.y);
+                    const branchX = pixel.x + dir;
+                    const branchY = pixel.y;
+                    if (branchX >= 0 && branchX < width && isEmpty(branchX, branchY)) {
+                        createPixel(`${strainId}_branch`, branchX, branchY);
                     }
                 }
             },
@@ -350,18 +363,24 @@
                 if (!pixel.growth) pixel.growth = 0;
                 pixel.growth++;
                 
+                // Produce flowers on the sides
                 if (pixel.growth % 40 === 0 && Math.random() < 0.4) {
                     const dx = Math.random() < 0.5 ? -1 : 1;
-                    if (isEmpty(pixel.x + dx, pixel.y)) {
-                        createPixel(`${strainId}_flower`, pixel.x + dx, pixel.y);
+                    const flowerX = pixel.x + dx;
+                    const flowerY = pixel.y;
+                    if (flowerX >= 0 && flowerX < width && isEmpty(flowerX, flowerY)) {
+                        createPixel(`${strainId}_flower`, flowerX, flowerY);
                     }
                 }
                 
+                // Final growth push - grow even taller
                 if (pixel.growth >= 70) {
-                    if (pixelMap[pixel.x] && pixelMap[pixel.x][pixel.y - 1]) {
-                        const above = pixelMap[pixel.x][pixel.y - 1];
-                        if (!above || isEmpty(pixel.x, pixel.y - 1)) {
-                            createPixel(`${strainId}_flowering`, pixel.x, pixel.y - 1);
+                    pixel.growth = 0;
+                    if (pixel.y > 0) {
+                        const aboveX = pixel.x;
+                        const aboveY = pixel.y - 1;
+                        if (isEmpty(aboveX, aboveY)) {
+                            createPixel(`${strainId}_flowering`, aboveX, aboveY);
                             changePixel(pixel, `${strainId}_stem`);
                         }
                     }
