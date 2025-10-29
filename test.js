@@ -4,7 +4,7 @@
 // MIT Licence – Research / EDU Use Only i do not condone the use of drugs and drug making
 // im pretty bad at this my mod is pretty jumbled
 // ============================================================================
-/* global elements, behaviors, pixel, settings, changePixel, pixelMap, width, height, isEmpty, createPixel */
+/* global elements, behaviors, pixel, settings, changePixel, pixelMap, width, height, isEmpty, createPixel, tryMove */
 
 (() => {
     'use strict';
@@ -238,28 +238,27 @@
         // SEEDLING (Stage 1) - Small starter plant
         elements[`${strainId}_seedling`] = {
             color: ['#8bc34a', '#7cb342', '#9ccc65'],
-            behavior: behaviors.CANNABIS_PLANT,
+            behavior: behaviors.STURDY_PLANT,
             category: 'botanicals',
             state: 'solid',
             density: 1000,
             tempHigh: 150,
             stateHigh: 'ash',
+            burnTime: 100,
+            burn: 10,
+            burnInto: 'ash',
+            breakInto: [`seed_${strainId}`],
+            forceAutoGen: true,
             tick: function(pixel) {
-                if (!pixel.growth) pixel.growth = 0;
-                pixel.growth++;
+                if (tryMove(pixel, pixel.x, pixel.y-1)) {
+                    // Moved up
+                }
+                if (!pixel.stage) { pixel.stage = 0; }
+                pixel.stage++;
                 
-                // Grow upward every 80 ticks
-                if (pixel.growth >= 80) {
-                    pixel.growth = 0;
-                    // Check if space above is empty
-                    if (pixel.y > 0) {
-                        const aboveX = pixel.x;
-                        const aboveY = pixel.y - 1;
-                        if (isEmpty(aboveX, aboveY)) {
-                            createPixel(`${strainId}_vegetative`, aboveX, aboveY);
-                            changePixel(pixel, `${strainId}_stem`);
-                        }
-                    }
+                if (pixel.stage > 100 && isEmpty(pixel.x, pixel.y-1)) {
+                    changePixel(pixel, `${strainId}_stem`);
+                    createPixel(`${strainId}_vegetative`, pixel.x, pixel.y-1);
                 }
             },
             reactions: {
@@ -271,27 +270,27 @@
         // VEGETATIVE (Stage 2) - Growing taller
         elements[`${strainId}_vegetative`] = {
             color: ['#4caf50', '#66bb6a', '#81c784'],
-            behavior: behaviors.CANNABIS_PLANT,
+            behavior: behaviors.STURDY_PLANT,
             category: 'botanicals',
             state: 'solid',
             density: 1000,
             tempHigh: 170,
             stateHigh: 'ash',
+            burnTime: 150,
+            burn: 10,
+            burnInto: 'ash',
+            breakInto: [`seed_${strainId}`],
+            forceAutoGen: true,
             tick: function(pixel) {
-                if (!pixel.growth) pixel.growth = 0;
-                pixel.growth++;
+                if (tryMove(pixel, pixel.x, pixel.y-1)) {
+                    // Moved up
+                }
+                if (!pixel.stage) { pixel.stage = 0; }
+                pixel.stage++;
                 
-                // Continue growing upward
-                if (pixel.growth >= 60) {
-                    pixel.growth = 0;
-                    if (pixel.y > 0) {
-                        const aboveX = pixel.x;
-                        const aboveY = pixel.y - 1;
-                        if (isEmpty(aboveX, aboveY)) {
-                            createPixel(`${strainId}_large`, aboveX, aboveY);
-                            changePixel(pixel, `${strainId}_stem`);
-                        }
-                    }
+                if (pixel.stage > 80 && isEmpty(pixel.x, pixel.y-1)) {
+                    changePixel(pixel, `${strainId}_stem`);
+                    createPixel(`${strainId}_large`, pixel.x, pixel.y-1);
                 }
             },
             reactions: {
@@ -303,40 +302,37 @@
         // LARGE (Stage 3) - Mature plant
         elements[`${strainId}_large`] = {
             color: cfg.colors,
-            behavior: behaviors.CANNABIS_PLANT,
+            behavior: behaviors.STURDY_PLANT,
             category: 'botanicals',
             state: 'solid',
             density: 1000,
             tempHigh: 180,
             stateHigh: 'ash',
-            burn: 5,
-            burnTime: 1200,
+            burn: 10,
+            burnTime: 200,
             burnInto: 'ash',
             breakInto: [`seed_${strainId}`, `${strainId}_flower`],
+            forceAutoGen: true,
             tick: function(pixel) {
-                if (!pixel.growth) pixel.growth = 0;
-                pixel.growth++;
+                if (tryMove(pixel, pixel.x, pixel.y-1)) {
+                    // Moved up
+                }
+                if (!pixel.stage) { pixel.stage = 0; }
+                pixel.stage++;
                 
-                // Continue growing even taller
-                if (pixel.growth >= 50) {
-                    pixel.growth = 0;
-                    if (pixel.y > 0) {
-                        const aboveX = pixel.x;
-                        const aboveY = pixel.y - 1;
-                        if (isEmpty(aboveX, aboveY)) {
-                            createPixel(`${strainId}_flowering`, aboveX, aboveY);
-                            changePixel(pixel, `${strainId}_stem`);
-                        }
-                    }
+                // Grow taller
+                if (pixel.stage > 60 && isEmpty(pixel.x, pixel.y-1)) {
+                    changePixel(pixel, `${strainId}_stem`);
+                    createPixel(`${strainId}_flowering`, pixel.x, pixel.y-1);
                 }
                 
-                // Spawn side branches occasionally
-                if (pixel.growth % 20 === 0 && Math.random() < 0.3) {
-                    const dir = Math.random() < 0.5 ? -1 : 1;
-                    const branchX = pixel.x + dir;
-                    const branchY = pixel.y;
-                    if (branchX >= 0 && branchX < width && isEmpty(branchX, branchY)) {
-                        createPixel(`${strainId}_branch`, branchX, branchY);
+                // Spawn side branches
+                if (pixel.stage % 30 === 0) {
+                    if (Math.random() < 0.4 && isEmpty(pixel.x+1, pixel.y)) {
+                        createPixel(`${strainId}_branch`, pixel.x+1, pixel.y);
+                    }
+                    if (Math.random() < 0.4 && isEmpty(pixel.x-1, pixel.y)) {
+                        createPixel(`${strainId}_branch`, pixel.x-1, pixel.y);
                     }
                 }
             },
@@ -349,41 +345,38 @@
         // FLOWERING (Stage 4) - Maximum size with buds
         elements[`${strainId}_flowering`] = {
             color: cfg.colors,
-            behavior: behaviors.CANNABIS_PLANT,
+            behavior: behaviors.STURDY_PLANT,
             category: 'botanicals',
             state: 'solid',
             density: 1000,
             tempHigh: 180,
             stateHigh: 'ash',
-            burn: 5,
-            burnTime: 1500,
+            burn: 10,
+            burnTime: 250,
             burnInto: 'ash',
             breakInto: [`seed_${strainId}`, `${strainId}_flower`, `${strainId}_flower`],
+            forceAutoGen: true,
             tick: function(pixel) {
-                if (!pixel.growth) pixel.growth = 0;
-                pixel.growth++;
+                if (tryMove(pixel, pixel.x, pixel.y-1)) {
+                    // Moved up
+                }
+                if (!pixel.stage) { pixel.stage = 0; }
+                pixel.stage++;
                 
-                // Produce flowers on the sides
-                if (pixel.growth % 40 === 0 && Math.random() < 0.4) {
-                    const dx = Math.random() < 0.5 ? -1 : 1;
-                    const flowerX = pixel.x + dx;
-                    const flowerY = pixel.y;
-                    if (flowerX >= 0 && flowerX < width && isEmpty(flowerX, flowerY)) {
-                        createPixel(`${strainId}_flower`, flowerX, flowerY);
+                // Produce flowers
+                if (pixel.stage % 50 === 0) {
+                    if (Math.random() < 0.5 && isEmpty(pixel.x+1, pixel.y)) {
+                        createPixel(`${strainId}_flower`, pixel.x+1, pixel.y);
+                    }
+                    if (Math.random() < 0.5 && isEmpty(pixel.x-1, pixel.y)) {
+                        createPixel(`${strainId}_flower`, pixel.x-1, pixel.y);
                     }
                 }
                 
-                // Final growth push - grow even taller
-                if (pixel.growth >= 70) {
-                    pixel.growth = 0;
-                    if (pixel.y > 0) {
-                        const aboveX = pixel.x;
-                        const aboveY = pixel.y - 1;
-                        if (isEmpty(aboveX, aboveY)) {
-                            createPixel(`${strainId}_flowering`, aboveX, aboveY);
-                            changePixel(pixel, `${strainId}_stem`);
-                        }
-                    }
+                // Continue growing even taller
+                if (pixel.stage > 80 && isEmpty(pixel.x, pixel.y-1)) {
+                    changePixel(pixel, `${strainId}_stem`);
+                    createPixel(`${strainId}_flowering`, pixel.x, pixel.y-1);
                 }
             },
             desc: `Flowering ${strainId} - TALL and harvest ready!`
