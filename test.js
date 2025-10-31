@@ -1,8 +1,6 @@
 // ============================================================================
 // thebestchemistrymod.js
-// mostly drug elements currently but i want to actually add chemistry elements like all kinds of elements
-// MIT Licence – Research / EDU Use Only i do not condone the use of drugs and drug making
-// im pretty bad at this my mod is pretty jumbled
+// MIT Licence – Research / EDU Use Only
 // ============================================================================
 /* global elements, behaviors, pixel, changePixel, pixelMap, width, height, isEmpty, createPixel, tryMove */
 
@@ -17,6 +15,15 @@
     const WALL = behaviors.WALL;
     const STURDY = behaviors.STURDY;
     const GAS = behaviors.GAS;
+
+    // Define STURDY_PLANT behavior (doesn't exist in base game)
+    if (!behaviors.STURDY_PLANT) {
+        behaviors.STURDY_PLANT = [
+            "XX|XX|XX",
+            "XX|XX|XX",
+            "XX|XX|XX",
+        ];
+    }
 
     // --------------------------------------------------------------------------
     // 2. ESSENTIAL BASE ELEMENTS
@@ -39,8 +46,6 @@
         hydrogen: { color: ['#f5f5f5', '#e0e0e0'], behavior: GAS, category: 'gases', state: 'gas', density: 0.09 },
         catalyst: { color: ['#ffccbc', '#ffab91'], behavior: PW, category: 'tools', state: 'solid', density: 1200 },
         red_phosphorus: { color: ['#d32f2f', '#c62828'], behavior: PW, category: 'powders', state: 'solid', density: 1100 },
-        iodine: { color: ['#6a1b9a', '#7b1fa2'], behavior: PW, category: 'powders', state: 'solid', density: 1260 },
-        bromine: { color: ['#d32f2f', '#c62828'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1310 },
         methylation: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 0.9 },
         steam: { color: ['#f5f5f5', '#e0e0e0'], behavior: GAS, category: 'gases', state: 'gas', density: 0.6 },
         ash: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'land', state: 'solid', density: 700 },
@@ -164,6 +169,7 @@
             elements[id] = { ...cfg };
         }
     });
+
     // --------------------------------------------------------------------------
     // 5. COMMON CHEMICAL COMPOUNDS
     // --------------------------------------------------------------------------
@@ -180,6 +186,19 @@
         // Acids & Bases
         sulfurous_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 1200, category: 'compounds', state: 'liquid', density: 1030, desc: 'H2SO3' },
         carbonic_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 1000, category: 'compounds', state: 'liquid', density: 1000, desc: 'H2CO3 - in soda' },
+        hydrochloric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1049, desc: 'HCl - strong acid' },
+        sulfuric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1840, viscosity: 2400, desc: 'H2SO4 - corrosive' },
+        acetic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1049, desc: 'Vinegar' },
+        nitric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1510, viscosity: 1200, desc: 'HNO3 - oxidizer' },
+        phosphoric_acid: { color: ['#f5f5f5', '#eeeeee'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1880, viscosity: 1500, desc: 'H3PO4' },
+        formic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1220, desc: 'HCOOH - from ants' },
+        citric_acid: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1665, desc: 'C6H8O7 - from citrus' },
+        oxalic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1900, desc: 'C2H2O4' },
+        sodium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2130, desc: 'NaOH - lye/caustic soda' },
+        potassium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2044, desc: 'KOH - caustic potash' },
+        calcium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2211, desc: 'Ca(OH)2 - slaked lime' },
+        ammonium_hydroxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 910, desc: 'NH4OH solution' },
+        ammonia: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 682, viscosity: 600, desc: 'Liquid NH3' },
         
         // Oxides
         carbon_dioxide: { color: ['#f5f5f5', '#e0e0e0'], behavior: GAS, category: 'compounds', state: 'gas', density: 1.98, desc: 'CO2 - greenhouse gas' },
@@ -190,57 +209,66 @@
         nitrogen_dioxide: { color: ['#d32f2f', '#c62828'], behavior: GAS, category: 'compounds', state: 'gas', density: 2.05, desc: 'NO2 - brown gas' },
         nitrous_oxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 1.98, desc: 'N2O - laughing gas' },
         iron_oxide: { color: ['#d32f2f', '#c62828'], behavior: PW, category: 'compounds', state: 'solid', density: 5250, desc: 'Fe2O3 - rust' },
-        aluminum_oxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 3950, desc: 'Al2O3 - alumina/sapphire' },
+        aluminum_oxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 3950, desc: 'Al2O3 - alumina' },
         silicon_dioxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2648, desc: 'SiO2 - quartz/sand' },
         titanium_dioxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 4230, desc: 'TiO2 - white pigment' },
         zinc_oxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 5606, desc: 'ZnO - sunscreen' },
         
         // Hydrides
         hydrogen_chloride: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 1.49, desc: 'HCl - gas form' },
-        hydrogen_fluoride: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 0.99, desc: 'HF - extremely corrosive' },
+        hydrogen_fluoride: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 0.99, desc: 'HF - corrosive' },
         hydrogen_sulfide: { color: ['#fff9c4', '#ffecb3'], behavior: GAS, category: 'compounds', state: 'gas', density: 1.54, desc: 'H2S - rotten egg smell' },
         ammonia_gas: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 0.73, desc: 'NH3 - pungent gas' },
         methane: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 0.72, desc: 'CH4 - natural gas' },
         ethane: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 1.36, desc: 'C2H6' },
         propane: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 2.01, desc: 'C3H8 - BBQ fuel' },
-        butane: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'compounds', state: 'gas', density: 2.48, desc: 'C4H10 - lighter fluid' },
         
         // Peroxides
-        hydrogen_peroxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 1245, category: 'compounds', state: 'liquid', density: 1450, desc: 'H2O2 - bleach/antiseptic' },
+        hydrogen_peroxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 1245, category: 'compounds', state: 'liquid', density: 1450, desc: 'H2O2 - bleach' },
         sodium_peroxide: { color: ['#fff9c4', '#ffecb3'], behavior: PW, category: 'compounds', state: 'solid', density: 2805, desc: 'Na2O2 - oxidizer' },
         
         // Nitrates & Nitrites
-        sodium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2261, desc: 'NaNO3 - Chile saltpeter' },
-        potassium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2109, desc: 'KNO3 - saltpeter/gunpowder' },
-        ammonium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 1725, desc: 'NH4NO3 - fertilizer/explosive' },
+        sodium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2261, desc: 'NaNO3 - saltpeter' },
+        potassium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2109, desc: 'KNO3 - gunpowder' },
+        ammonium_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 1725, desc: 'NH4NO3 - fertilizer' },
         silver_nitrate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 4350, desc: 'AgNO3 - photography' },
-        sodium_nitrite: { color: ['#fff9c4', '#ffecb3'], behavior: PW, category: 'compounds', state: 'solid', density: 2168, desc: 'NaNO2 - food preservative' },
         
         // Sulfates
         copper_sulfate: { color: ['#039be5', '#0277bd'], behavior: PW, category: 'compounds', state: 'solid', density: 3600, desc: 'CuSO4 - blue crystals' },
-        iron_sulfate: { color: ['#c8e6c9', '#a5d6a7'], behavior: PW, category: 'compounds', state: 'solid', density: 1898, desc: 'FeSO4 - green crystals' },
+        iron_sulfate: { color: ['#c8e6c9', '#a5d6a7'], behavior: PW, category: 'compounds', state: 'solid', density: 1898, desc: 'FeSO4 - green' },
         zinc_sulfate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 3540, desc: 'ZnSO4' },
         
         // Carbonates
         sodium_carbonate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2540, desc: 'Na2CO3 - washing soda' },
         potassium_carbonate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2290, desc: 'K2CO3 - potash' },
         
-        // Chlorides
-        magnesium_chloride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2320, desc: 'MgCl2 - de-icer' },
-        calcium_chloride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2150, desc: 'CaCl2 - de-icer' },
-        iron_chloride: { color: ['#8d6e63', '#795548'], behavior: PW, category: 'compounds', state: 'solid', density: 2898, desc: 'FeCl3 - brown/orange' },
+        // Organic Solvents
+        toluene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 867, desc: 'Toluene - aromatic' },
+        benzene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 879, desc: 'Benzene - C6H6' },
+        xylene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 860, desc: 'Xylene - solvent' },
+        hexane: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 655, desc: 'Hexane - extraction' },
+        methanol: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 792, desc: 'Methanol - wood alcohol' },
+        isopropanol: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 786, desc: 'Rubbing alcohol' },
+        dichloromethane: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1326, desc: 'DCM' },
+        chloroform: { color: ['#e8f5e9', '#c8e6c9'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1480, desc: 'CHCl3' },
+        diethyl_ether: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 713, desc: 'Ether - volatile' },
+        acetic_anhydride: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1080, desc: 'Ac2O' },
         
-        // Hydroxides
-        sodium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2130, desc: 'NaOH - lye/caustic soda' },
-        potassium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2044, desc: 'KOH - caustic potash' },
-        calcium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2211, desc: 'Ca(OH)2 - slaked lime' },
-        
-        // Phosphates
-        calcium_phosphate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 3140, desc: 'Ca3(PO4)2 - bone mineral' },
-        sodium_phosphate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'compounds', state: 'solid', density: 2536, desc: 'Na3PO4' },
-        
-        // Silicates
-        sodium_silicate: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 2000, category: 'compounds', state: 'liquid', density: 1390, desc: 'Na2SiO3 - water glass' },
+        // Special Compounds
+        methylamine: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 0.7, desc: 'CH3NH2' },
+        potassium_permanganate: { color: ['#6a1b9a', '#7b1fa2'], behavior: PW, category: 'powders', state: 'solid', density: 1270, desc: 'KMnO4 - oxidizer' },
+        thionyl_chloride: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1638, desc: 'SOCl2' },
+        lithium_aluminum_hydride: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 917, desc: 'LiAlH4 - reducer' },
+        sodium_borohydride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1074, desc: 'NaBH4 - reducer' },
+        dimethylformamide: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 944, desc: 'DMF - solvent' },
+        dimethyl_sulfoxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1100, desc: 'DMSO - solvent' },
+        tetrahydrofuran: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 889, desc: 'THF - ether' },
+        glycerol: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1261, viscosity: 1500, desc: 'Glycerol - viscous' },
+        phenol: { color: ['#ffccbc', '#ffab91'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1070, desc: 'Phenol - carbolic acid' },
+        aniline: { color: ['#8d6e63', '#795548'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1022, desc: 'Aniline - aromatic amine' },
+        pyridine: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 982, desc: 'Pyridine - base' },
+        piperidine: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 862, desc: 'Piperidine' },
+        formaldehyde: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1083, desc: 'Formaldehyde - HCHO' },
         
         // Alloys
         brass: { color: ['#ffd700', '#ffed4e'], behavior: PW, category: 'alloys', state: 'solid', density: 8400, desc: 'Cu + Zn alloy - golden' },
@@ -252,64 +280,13 @@
 
     Object.entries(commonCompounds).forEach(([id, cfg]) => {
         if (!elements[id]) {
-            elements[id] = { ...cfg };
-        }
-    });
-        sodium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1130, desc: 'Sodium hydroxide - caustic base' },
-        ammonium_hydroxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 910, desc: 'Ammonium hydroxide solution' },
-        hydrochloric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1049, desc: 'Hydrochloric acid - strong acid' },
-        sulfuric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1840, viscosity: 2400, desc: 'Sulfuric acid - highly corrosive' },
-        acetic_anhydride: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1080, desc: 'Acetic anhydride - acetylating agent' },
-        methylamine: { color: ['#e1f5fe', '#b3e5fc'], behavior: GAS, category: 'gases', state: 'gas', density: 0.7, desc: 'Methylamine gas' },
-        potassium_permanganate: { color: ['#6a1b9a', '#7b1fa2'], behavior: PW, category: 'powders', state: 'solid', density: 1270, desc: 'Potassium permanganate - oxidizer' },
-        sodium_carbonate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1120, desc: 'Sodium carbonate - washing soda' },
-        potassium_carbonate: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1140, desc: 'Potassium carbonate' },
-        acetic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1049, desc: 'Acetic acid - vinegar' },
-        toluene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 867, desc: 'Toluene - aromatic solvent' },
-        benzene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 879, desc: 'Benzene - aromatic hydrocarbon' },
-        xylene: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 860, desc: 'Xylene - industrial solvent' },
-        hexane: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 655, desc: 'Hexane - extraction solvent' },
-        methanol: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 792, desc: 'Methanol - wood alcohol' },
-        isopropanol: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 786, desc: 'Isopropanol - rubbing alcohol' },
-        dichloromethane: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1326, desc: 'DCM - methylene chloride' },
-        chloroform: { color: ['#e8f5e9', '#c8e6c9'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1480, desc: 'Chloroform - CHCl3' },
-        diethyl_ether: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 713, desc: 'Diethyl ether - volatile solvent' },
-        phosphoric_acid: { color: ['#f5f5f5', '#eeeeee'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1880, viscosity: 1500, desc: 'Phosphoric acid' },
-        nitric_acid: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1510, viscosity: 1200, desc: 'Nitric acid - strong oxidizer' },
-        formic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1220, desc: 'Formic acid - from ants' },
-        citric_acid: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1665, desc: 'Citric acid - from citrus' },
-        oxalic_acid: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1900, desc: 'Oxalic acid' },
-        potassium_hydroxide: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'powders', state: 'solid', density: 1120, desc: 'Potassium hydroxide - caustic' },
-        calcium_hydroxide: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1220, desc: 'Calcium hydroxide - slaked lime' },
-        sodium_chloride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1170, desc: 'Sodium chloride - table salt' },
-        sodium_metal: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 968, desc: 'Sodium metal - reactive' },
-        lithium_metal: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 534, desc: 'Lithium metal - lightest metal' },
-        palladium_catalyst: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 1200, desc: 'Palladium catalyst' },
-        ammonia: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 682, viscosity: 600, desc: 'Liquid ammonia' },
-        thionyl_chloride: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1638, desc: 'Thionyl chloride' },
-        lithium_aluminum_hydride: { color: ['#9e9e9e', '#757575'], behavior: PW, category: 'powders', state: 'solid', density: 917, desc: 'LiAlH4 - reducing agent' },
-        sodium_borohydride: { color: ['#ffffff', '#f5f5f5'], behavior: PW, category: 'powders', state: 'solid', density: 1074, desc: 'NaBH4 - reducing agent' },
-        dimethylformamide: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 944, desc: 'DMF - polar solvent' },
-        dimethyl_sulfoxide: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1100, desc: 'DMSO - aprotic solvent' },
-        tetrahydrofuran: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 889, desc: 'THF - cyclic ether' },
-        glycerol: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1261, viscosity: 1500, desc: 'Glycerol - viscous' },
-        phenol: { color: ['#ffccbc', '#ffab91'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1070, desc: 'Phenol - carbolic acid' },
-        aniline: { color: ['#8d6e63', '#795548'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1022, desc: 'Aniline - aromatic amine' },
-        pyridine: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 982, desc: 'Pyridine' },
-        piperidine: { color: ['#fff9c4', '#ffecb3'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 862, desc: 'Piperidine' },
-        formaldehyde: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, category: 'liquids', state: 'liquid', density: 1083, desc: 'Formaldehyde solution' }
-    };
-
-    Object.entries(chemicalReagents).forEach(([id, cfg]) => {
-        if (!elements[id]) {
-            elements[id] = { ...cfg, tempHigh: 500, stateHigh: 'smoke' };
+            elements[id] = { ...cfg, tempHigh: cfg.tempHigh || 500, stateHigh: cfg.stateHigh || 'smoke' };
         }
     });
 
     // --------------------------------------------------------------------------
-    // 6. MASSIVE CHEMICAL REAGENTS EXPANSION
+    // 6. RAW ALKALOIDS & BOTANICALS
     // --------------------------------------------------------------------------
-    const chemicalReagents = {
     
     const rawAlkaloids = {
         coca_leaves: { color: ['#2e7d32', '#1b5e20', '#388e3c'], behavior: PW, category: 'botanicals', state: 'solid', density: 600, tempHigh: 180, stateHigh: 'ash', desc: 'Dried coca leaves' },
@@ -333,7 +310,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 8. PRECURSORS
+    // 7. PRECURSORS
     // --------------------------------------------------------------------------
     
     const precursors = {
@@ -360,7 +337,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 7. INTERMEDIATES
+    // 8. INTERMEDIATES
     // --------------------------------------------------------------------------
     
     const intermediates = {
@@ -377,7 +354,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 8. SOLUTIONS
+    // 9. SOLUTIONS
     // --------------------------------------------------------------------------
     
     const solutions = {
@@ -394,29 +371,73 @@
     });
 
     // --------------------------------------------------------------------------
-    // 9. ALL 60+ CANNABIS STRAINS DATABASE
+    // 10. CANNABIS STRAINS (60+ STRAINS)
     // --------------------------------------------------------------------------
     
     const cannabisStrains = {
-        og_kush: { colors: ['#3e8948', '#2d6634', '#4a9b54'], thc: 0.25, cbd: 0.05, type: 'hybrid', desc: 'OG Kush - West Coast legend' },
-        sour_diesel: { colors: ['#7cb342', '#689f38', '#558b2f'], thc: 0.26, cbd: 0.02, type: 'sativa', desc: 'Sour Diesel - diesel fuel aroma' },
-        blue_dream: { colors: ['#5c6bc0', '#3949ab', '#4a5f8d'], thc: 0.24, cbd: 0.03, type: 'hybrid', desc: 'Blue Dream - California classic' },
-        girl_scout_cookies: { colors: ['#6a4c93', '#553c7a', '#7d5ba6'], thc: 0.28, cbd: 0.02, type: 'hybrid', desc: 'GSC - sweet and potent' },
-        gorilla_glue: { colors: ['#4a7c2f', '#5d9033', '#3e6d27'], thc: 0.30, cbd: 0.02, type: 'hybrid', desc: 'GG4 - extremely sticky' },
-        northern_lights: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.22, cbd: 0.04, type: 'indica', desc: 'Northern Lights - relaxing' },
-        granddaddy_purple: { colors: ['#6a1b9a', '#7b1fa2', '#8e24aa'], thc: 0.23, cbd: 0.03, type: 'indica', desc: 'GDP - deep purple' },
-        jack_herer: { colors: ['#7cb342', '#8bc34a', '#9ccc65'], thc: 0.24, cbd: 0.03, type: 'sativa', desc: 'Jack Herer - uplifting' },
-        white_widow: { colors: ['#f5f5f5', '#eeeeee', '#e0e0e0'], thc: 0.25, cbd: 0.03, type: 'hybrid', desc: 'White Widow - Dutch champion' },
-        green_crack: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Green Crack - energizing' },
-        charlottes_web: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.03, cbd: 0.17, type: 'sativa', desc: "Charlotte's Web - high CBD" },
-        gelato: { colors: ['#7b5ba6', '#9575cd', '#6a4c93'], thc: 0.27, cbd: 0.02, type: 'hybrid', desc: 'Gelato - dessert strain' },
-        wedding_cake: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.27, cbd: 0.02, type: 'indica', desc: 'Wedding Cake - vanilla' },
-        runtz: { colors: ['#ab47bc', '#ba68c8', '#9c27b0'], thc: 0.29, cbd: 0.02, type: 'hybrid', desc: 'Runtz - candy-like' },
-        pineapple_express: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.25, cbd: 0.02, type: 'hybrid', desc: 'Pineapple Express - tropical' }
+        og_kush: { colors: ['#3e8948', '#2d6634', '#4a9b54'], thc: 0.25, cbd: 0.05, type: 'hybrid', desc: 'OG Kush' },
+        sour_diesel: { colors: ['#7cb342', '#689f38', '#558b2f'], thc: 0.26, cbd: 0.02, type: 'sativa', desc: 'Sour Diesel' },
+        blue_dream: { colors: ['#5c6bc0', '#3949ab', '#4a5f8d'], thc: 0.24, cbd: 0.03, type: 'hybrid', desc: 'Blue Dream' },
+        girl_scout_cookies: { colors: ['#6a4c93', '#553c7a', '#7d5ba6'], thc: 0.28, cbd: 0.02, type: 'hybrid', desc: 'GSC' },
+        gorilla_glue: { colors: ['#4a7c2f', '#5d9033', '#3e6d27'], thc: 0.30, cbd: 0.02, type: 'hybrid', desc: 'GG4' },
+        northern_lights: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.22, cbd: 0.04, type: 'indica', desc: 'Northern Lights' },
+        granddaddy_purple: { colors: ['#6a1b9a', '#7b1fa2', '#8e24aa'], thc: 0.23, cbd: 0.03, type: 'indica', desc: 'GDP' },
+        jack_herer: { colors: ['#7cb342', '#8bc34a', '#9ccc65'], thc: 0.24, cbd: 0.03, type: 'sativa', desc: 'Jack Herer' },
+        white_widow: { colors: ['#f5f5f5', '#eeeeee', '#e0e0e0'], thc: 0.25, cbd: 0.03, type: 'hybrid', desc: 'White Widow' },
+        green_crack: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Green Crack' },
+        charlottes_web: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.03, cbd: 0.17, type: 'sativa', desc: "Charlotte's Web" },
+        gelato: { colors: ['#7b5ba6', '#9575cd', '#6a4c93'], thc: 0.27, cbd: 0.02, type: 'hybrid', desc: 'Gelato' },
+        wedding_cake: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.27, cbd: 0.02, type: 'indica', desc: 'Wedding Cake' },
+        runtz: { colors: ['#ab47bc', '#ba68c8', '#9c27b0'], thc: 0.29, cbd: 0.02, type: 'hybrid', desc: 'Runtz' },
+        pineapple_express: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.25, cbd: 0.02, type: 'hybrid', desc: 'Pineapple Express' },
+        purple_haze: { colors: ['#7b1fa2', '#8e24aa', '#9c27b0'], thc: 0.23, cbd: 0.02, type: 'sativa', desc: 'Purple Haze' },
+        ak47: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.24, cbd: 0.02, type: 'hybrid', desc: 'AK-47' },
+        amnesia_haze: { colors: ['#ffd54f', '#ffca28', '#ffc107'], thc: 0.25, cbd: 0.02, type: 'sativa', desc: 'Amnesia Haze' },
+        super_lemon_haze: { colors: ['#fff59d', '#fff176', '#ffee58'], thc: 0.26, cbd: 0.02, type: 'sativa', desc: 'Super Lemon Haze' },
+        skywalker_og: { colors: ['#3e8948', '#2d6634', '#4a9b54'], thc: 0.26, cbd: 0.03, type: 'indica', desc: 'Skywalker OG' },
+        chemdawg: { colors: ['#7cb342', '#689f38', '#558b2f'], thc: 0.27, cbd: 0.02, type: 'hybrid', desc: 'Chemdawg' },
+        super_silver_haze: { colors: ['#e0e0e0', '#eeeeee', '#f5f5f5'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Super Silver Haze' },
+        trainwreck: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.25, cbd: 0.02, type: 'hybrid', desc: 'Trainwreck' },
+        bubba_kush: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.22, cbd: 0.04, type: 'indica', desc: 'Bubba Kush' },
+        durban_poison: { colors: ['#7cb342', '#8bc34a', '#9ccc65'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Durban Poison' },
+        master_kush: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.23, cbd: 0.03, type: 'indica', desc: 'Master Kush' },
+        blueberry: { colors: ['#5c6bc0', '#3949ab', '#4a5f8d'], thc: 0.22, cbd: 0.03, type: 'indica', desc: 'Blueberry' },
+        maui_wowie: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.23, cbd: 0.02, type: 'sativa', desc: 'Maui Wowie' },
+        la_confidential: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.25, cbd: 0.03, type: 'indica', desc: 'LA Confidential' },
+        tangie: { colors: ['#ff9800', '#fb8c00', '#f57c00'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Tangie' },
+        critical_mass: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.22, cbd: 0.03, type: 'indica', desc: 'Critical Mass' },
+        strawberry_cough: { colors: ['#f06292', '#ec407a', '#e91e63'], thc: 0.23, cbd: 0.02, type: 'sativa', desc: 'Strawberry Cough' },
+        zkittlez: { colors: ['#ab47bc', '#ba68c8', '#9c27b0'], thc: 0.26, cbd: 0.02, type: 'indica', desc: 'Zkittlez' },
+        do_si_dos: { colors: ['#6a4c93', '#553c7a', '#7d5ba6'], thc: 0.28, cbd: 0.02, type: 'indica', desc: 'Do-Si-Dos' },
+        sherbert: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.26, cbd: 0.02, type: 'indica', desc: 'Sherbert' },
+        lemon_haze: { colors: ['#fff59d', '#fff176', '#ffee58'], thc: 0.25, cbd: 0.02, type: 'sativa', desc: 'Lemon Haze' },
+        fire_og: { colors: ['#3e8948', '#2d6634', '#4a9b54'], thc: 0.27, cbd: 0.03, type: 'indica', desc: 'Fire OG' },
+        ghost_train_haze: { colors: ['#f5f5f5', '#eeeeee', '#e0e0e0'], thc: 0.28, cbd: 0.02, type: 'sativa', desc: 'Ghost Train Haze' },
+        blue_cheese: { colors: ['#5c6bc0', '#3949ab', '#4a5f8d'], thc: 0.23, cbd: 0.03, type: 'indica', desc: 'Blue Cheese' },
+        candyland: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.24, cbd: 0.02, type: 'sativa', desc: 'Candyland' },
+        gorilla_bomb: { colors: ['#4a7c2f', '#5d9033', '#3e6d27'], thc: 0.29, cbd: 0.02, type: 'hybrid', desc: 'Gorilla Bomb' },
+        gods_gift: { colors: ['#6a1b9a', '#7b1fa2', '#8e24aa'], thc: 0.25, cbd: 0.04, type: 'indica', desc: "God's Gift" },
+        headband: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.24, cbd: 0.02, type: 'hybrid', desc: 'Headband' },
+        purple_punch: { colors: ['#6a1b9a', '#7b1fa2', '#8e24aa'], thc: 0.25, cbd: 0.03, type: 'indica', desc: 'Purple Punch' },
+        sunset_sherbet: { colors: ['#ff9800', '#fb8c00', '#f57c00'], thc: 0.26, cbd: 0.02, type: 'indica', desc: 'Sunset Sherbet' },
+        kosher_kush: { colors: ['#1b5e20', '#2e7d32', '#388e3c'], thc: 0.25, cbd: 0.03, type: 'indica', desc: 'Kosher Kush' },
+        lemon_skunk: { colors: ['#fff59d', '#fff176', '#ffee58'], thc: 0.23, cbd: 0.02, type: 'hybrid', desc: 'Lemon Skunk' },
+        cherry_pie: { colors: ['#f06292', '#ec407a', '#e91e63'], thc: 0.24, cbd: 0.02, type: 'indica', desc: 'Cherry Pie' },
+        chernobyl: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.25, cbd: 0.02, type: 'hybrid', desc: 'Chernobyl' },
+        cookies_and_cream: { colors: ['#f5f5f5', '#eeeeee', '#e0e0e0'], thc: 0.26, cbd: 0.02, type: 'hybrid', desc: 'Cookies and Cream' },
+        black_widow: { colors: ['#212121', '#424242', '#616161'], thc: 0.25, cbd: 0.03, type: 'hybrid', desc: 'Black Widow' },
+        banana_kush: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.24, cbd: 0.03, type: 'hybrid', desc: 'Banana Kush' },
+        gorilla_zkittlez: { colors: ['#4a7c2f', '#5d9033', '#3e6d27'], thc: 0.29, cbd: 0.02, type: 'indica', desc: 'Gorilla Zkittlez' },
+        london_pound_cake: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.28, cbd: 0.02, type: 'indica', desc: 'London Pound Cake' },
+        mimosa: { colors: ['#ff9800', '#fb8c00', '#f57c00'], thc: 0.27, cbd: 0.02, type: 'sativa', desc: 'Mimosa' },
+        wedding_crasher: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.27, cbd: 0.02, type: 'hybrid', desc: 'Wedding Crasher' },
+        apple_fritter: { colors: ['#fff176', '#ffd54f', '#ffca28'], thc: 0.28, cbd: 0.02, type: 'hybrid', desc: 'Apple Fritter' },
+        ice_cream_cake: { colors: ['#e1bee7', '#ce93d8', '#ba68c8'], thc: 0.27, cbd: 0.02, type: 'indica', desc: 'Ice Cream Cake' },
+        jungle_cake: { colors: ['#7cb342', '#8bc34a', '#689f38'], thc: 0.26, cbd: 0.02, type: 'indica', desc: 'Jungle Cake' }
     };
 
     // --------------------------------------------------------------------------
-    // 10. PLANT NUTRIENTS - SOLID POWDER
+    // 11. PLANT NUTRIENTS
     // --------------------------------------------------------------------------
     
     elements.plant_nutrients = {
@@ -426,16 +447,16 @@
         state: 'solid',
         density: 900,
         reactions: {},
-        desc: 'Plant nutrients - speeds up cannabis growth!'
+        desc: 'Plant nutrients - speeds growth!'
     };
 
     // --------------------------------------------------------------------------
-    // 11. CREATE TALL GROWING CANNABIS PLANTS - SIMPLIFIED 3 STAGES
+    // 12. CREATE CANNABIS PLANTS - TALL TREE-LIKE GROWTH
     // --------------------------------------------------------------------------
     
     Object.entries(cannabisStrains).forEach(([strainId, cfg]) => {
         
-        // SEED - starts the growth
+        // SEED
         elements[`seed_${strainId}`] = {
             color: ['#8d6e63', '#795548', '#a1887f'],
             behavior: PW,
@@ -449,10 +470,10 @@
                 wet_soil: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.15 },
                 mud: { elem1: `${strainId}_seedling`, elem2: null, chance: 0.2 }
             },
-            desc: `${strainId} seeds - plant in soil to grow TALL`
+            desc: `${strainId} seed - plant to grow`
         };
 
-        // SEEDLING (Stage 1) - Like sapling
+        // SEEDLING
         elements[`${strainId}_seedling`] = {
             color: ['#8bc34a', '#7cb342', '#9ccc65'],
             behavior: behaviors.STURDY_PLANT,
@@ -461,17 +482,11 @@
             density: 1000,
             tempHigh: 150,
             stateHigh: 'ash',
-            burnTime: 100,
-            burn: 10,
-            burnInto: 'ash',
             breakInto: [`seed_${strainId}`],
-            forceAutoGen: true,
             tick: function(pixel) {
-                // Don't move - stay rooted!
-                if (!pixel.stage) { pixel.stage = 0 }
+                if (!pixel.stage) pixel.stage = 0;
                 pixel.stage++;
                 
-                // After 100 ticks, grow into next stage
                 if (pixel.stage > 100 && isEmpty(pixel.x, pixel.y-1)) {
                     changePixel(pixel, `${strainId}_stem`);
                     createPixel(`${strainId}_plant`, pixel.x, pixel.y-1);
@@ -480,10 +495,10 @@
             reactions: {
                 plant_nutrients: { elem1: `${strainId}_plant`, elem2: null, chance: 0.9 }
             },
-            desc: `Young ${strainId} seedling - grows into tall plant`
+            desc: `${strainId} seedling`
         };
 
-        // PLANT (Stage 2) - Main growing trunk
+        // PLANT - main growing trunk
         elements[`${strainId}_plant`] = {
             color: cfg.colors,
             behavior: behaviors.STURDY_PLANT,
@@ -492,23 +507,18 @@
             density: 1000,
             tempHigh: 180,
             stateHigh: 'ash',
-            burn: 10,
-            burnTime: 200,
-            burnInto: 'ash',
             breakInto: [`seed_${strainId}`, `${strainId}_flower`],
-            forceAutoGen: true,
             tick: function(pixel) {
-                // Don't move - stay in place!
-                if (!pixel.stage) { pixel.stage = 0 }
+                if (!pixel.stage) pixel.stage = 0;
                 pixel.stage++;
                 
-                // Continue growing upward
+                // Grow upward
                 if (pixel.stage > 60 && isEmpty(pixel.x, pixel.y-1)) {
                     changePixel(pixel, `${strainId}_stem`);
                     createPixel(`${strainId}_plant`, pixel.x, pixel.y-1);
                 }
                 
-                // Spawn branches and flowers on sides
+                // Spawn branches on sides
                 if (pixel.stage % 30 === 0) {
                     if (Math.random() < 0.3 && isEmpty(pixel.x+1, pixel.y)) {
                         createPixel(`${strainId}_branch`, pixel.x+1, pixel.y);
@@ -518,7 +528,7 @@
                     }
                 }
                 
-                // Occasionally spawn flowers
+                // Spawn flowers
                 if (pixel.stage % 50 === 0) {
                     if (Math.random() < 0.4 && isEmpty(pixel.x+1, pixel.y)) {
                         createPixel(`${strainId}_flower`, pixel.x+1, pixel.y);
@@ -528,10 +538,10 @@
                     }
                 }
             },
-            desc: `${cfg.desc} - grows tall like a tree`
+            desc: `${cfg.desc} - THC ${cfg.thc * 100}%`
         };
 
-        // STEM - structural support (like tree_trunk)
+        // STEM
         elements[`${strainId}_stem`] = {
             color: ['#6d4c41', '#5d4037', '#4e342e'],
             behavior: STURDY,
@@ -540,14 +550,11 @@
             density: 1200,
             tempHigh: 200,
             stateHigh: 'ash',
-            burn: 5,
-            burnTime: 150,
-            burnInto: 'ash',
             breakInto: 'plant_matter',
-            desc: `${strainId} stem - supports tall growth`
+            desc: `${strainId} stem`
         };
 
-        // BRANCH - side growth (like tree_branch)
+        // BRANCH
         elements[`${strainId}_branch`] = {
             color: cfg.colors,
             behavior: behaviors.STURDY_PLANT,
@@ -556,14 +563,11 @@
             density: 950,
             tempHigh: 180,
             stateHigh: 'ash',
-            burn: 8,
-            burnTime: 100,
-            burnInto: 'ash',
             breakInto: `${strainId}_flower`,
-            desc: `${strainId} branch - grows flowers`
+            desc: `${strainId} branch`
         };
 
-        // FLOWER - harvestable product
+        // FLOWER - harvestable
         elements[`${strainId}_flower`] = {
             color: cfg.colors,
             behavior: PW,
@@ -572,8 +576,6 @@
             density: 700,
             tempHigh: 175,
             stateHigh: ['smoke', 'thc_vapor'],
-            burn: 5,
-            burnTime: 80,
             breakInto: [`seed_${strainId}`],
             reactions: {
                 butane: { elem1: 'bho', elem2: 'plant_matter', chance: 0.25 },
@@ -590,7 +592,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 12. BOTANICAL PRODUCTS & EXTRACTS
+    // 13. BOTANICAL PRODUCTS & EXTRACTS
     // --------------------------------------------------------------------------
     
     const botanicalProducts = {
@@ -607,7 +609,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 13. HARVESTING TOOLS
+    // 14. HARVESTING TOOLS
     // --------------------------------------------------------------------------
     
     elements.scissors = {
@@ -635,7 +637,7 @@
             }
             return false;
         },
-        desc: 'Scissors - harvest cannabis plants for flowers'
+        desc: 'Scissors - harvest plants for flowers'
     };
 
     if (!elements.knife) {
@@ -657,7 +659,7 @@
                 }
                 return false;
             },
-            desc: 'Knife - harvest single flower from plant'
+            desc: 'Knife - harvest single flower'
         };
     }
 
@@ -680,12 +682,12 @@
                 }
                 return false;
             },
-            desc: 'Blade - sharp cutting tool for harvesting'
+            desc: 'Blade - sharp cutting tool'
         };
     }
 
     // --------------------------------------------------------------------------
-    // 14. FINAL RESEARCH COMPOUNDS - EXPANDED
+    // 15. FINAL RESEARCH COMPOUNDS
     // --------------------------------------------------------------------------
     
     const finalCompounds = {
@@ -695,25 +697,25 @@
         amphetamine: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1150, tempHigh: 350, stateHigh: 'smoke', desc: 'Amphetamine' },
         mdma: { color: ['#fff9c4', '#ffecb3'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1200, tempHigh: 298, stateHigh: 'mdma_smoke', desc: 'MDMA - ecstasy' },
         mda: { color: ['#fff9c4', '#ffecb3'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1190, tempHigh: 337, stateHigh: 'smoke', desc: 'MDA' },
-        heroin: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1350, tempHigh: 323, stateHigh: 'heroin_smoke', desc: 'Heroin - diacetylmorphine' },
+        heroin: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1350, tempHigh: 323, stateHigh: 'heroin_smoke', desc: 'Heroin' },
         morphine: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1320, tempHigh: 405, stateHigh: 'morphine_smoke', desc: 'Morphine' },
         codeine: { color: ['#f5f5f5', '#ffffff'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1340, tempHigh: 307, stateHigh: 'smoke', desc: 'Codeine' },
         oxycodone: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1360, tempHigh: 369, stateHigh: 'smoke', desc: 'Oxycodone' },
         hydrocodone: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1340, tempHigh: 348, stateHigh: 'smoke', desc: 'Hydrocodone' },
-        lsd: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1300, tempHigh: 233, stateHigh: 'lsd_vapor', desc: 'LSD - lysergic acid diethylamide' },
-        dmt: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1200, tempHigh: 310, stateHigh: 'dmt_vapor', desc: 'DMT - dimethyltryptamine' },
+        lsd: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1300, tempHigh: 233, stateHigh: 'lsd_vapor', desc: 'LSD' },
+        dmt: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1200, tempHigh: 310, stateHigh: 'dmt_vapor', desc: 'DMT' },
         psilocybin: { color: ['#bcaaa4', '#a1887f'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1280, tempHigh: 370, stateHigh: 'smoke', desc: 'Psilocybin' },
         psilocin: { color: ['#bcaaa4', '#a1887f'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1270, tempHigh: 323, stateHigh: 'smoke', desc: 'Psilocin' },
         mescaline: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1290, tempHigh: 333, stateHigh: 'smoke', desc: 'Mescaline' },
-        pcp: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1240, tempHigh: 383, stateHigh: 'pcp_vapor', desc: 'PCP - angel dust' },
+        pcp: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1240, tempHigh: 383, stateHigh: 'pcp_vapor', desc: 'PCP' },
         ketamine: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1250, tempHigh: 412, stateHigh: 'ketamine_vapor', desc: 'Ketamine' },
         fentanyl: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1400, tempHigh: 237, stateHigh: 'fentanyl_vapor', desc: 'Fentanyl' },
         carfentanil: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1420, tempHigh: 241, stateHigh: 'fentanyl_vapor', desc: 'Carfentanil' },
         ghb: { color: ['#e1f5fe', '#b3e5fc'], behavior: LIQ, viscosity: 1800, category: 'research_compounds', state: 'liquid', density: 1120, tempHigh: 100, stateHigh: 'steam', desc: 'GHB' },
-        mephedrone: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1150, tempHigh: 344, stateHigh: 'smoke', desc: 'Mephedrone - 4-MMC' },
-        methylone: { color: ['#f5f5f5', '#ffffff'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1220, tempHigh: 351, stateHigh: 'smoke', desc: 'Methylone - bk-MDMA' },
+        mephedrone: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1150, tempHigh: 344, stateHigh: 'smoke', desc: 'Mephedrone' },
+        methylone: { color: ['#f5f5f5', '#ffffff'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1220, tempHigh: 351, stateHigh: 'smoke', desc: 'Methylone' },
         salvinorin_a: { color: ['#004d40', '#00695c'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1250, tempHigh: 388, stateHigh: 'smoke', desc: 'Salvinorin A' },
-        mitragynine: { color: ['#8d6e63', '#795548'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1250, tempHigh: 390, stateHigh: 'smoke', desc: 'Mitragynine - kratom alkaloid' },
+        mitragynine: { color: ['#8d6e63', '#795548'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1250, tempHigh: 390, stateHigh: 'smoke', desc: 'Mitragynine' },
         ibogaine: { color: ['#3e2723', '#4e342e'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1320, tempHigh: 302, stateHigh: 'smoke', desc: 'Ibogaine' },
         _2c_b: { color: ['#ffffff', '#fafafa'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1260, tempHigh: 385, stateHigh: 'smoke', desc: '2C-B' },
         _4_aco_dmt: { color: ['#ffccbc', '#ffab91'], behavior: PW, category: 'research_compounds', state: 'solid', density: 1290, tempHigh: 335, stateHigh: 'smoke', desc: '4-AcO-DMT' },
@@ -727,7 +729,7 @@
     });
 
     // --------------------------------------------------------------------------
-    // 15. UNIVERSAL PRECURSOR
+    // 16. UNIVERSAL PRECURSOR - CREATES ALL ELEMENTS
     // --------------------------------------------------------------------------
     
     const allPlantElements = [];
@@ -738,7 +740,6 @@
     const allChemicals = [
         ...Object.keys(periodicTable),
         ...Object.keys(commonCompounds),
-        ...Object.keys(chemicalReagents), 
         ...Object.keys(rawAlkaloids),
         ...Object.keys(precursors),
         ...Object.keys(intermediates),
@@ -760,14 +761,14 @@
         reactions: {
             soil: { elem1: [...allPlantElements, ...allChemicals], elem2: null, chance: 0.1 }
         },
-        desc: 'Universal precursor - creates ALL elements'
+        desc: 'Universal precursor - creates ALL elements when touching soil'
     };
 
     // --------------------------------------------------------------------------
-    // 16. CONSOLE LOG
+    // 17. CONSOLE LOG
     // --------------------------------------------------------------------------
     
-    console.log('🌿 thebestchemistrymod.js LOADED!');
+    console.log('🌿 thebestchemistrymod.js LOADED SUCCESSFULLY!');
     console.log('='.repeat(70));
     console.log('✅ ' + Object.keys(cannabisStrains).length + ' Cannabis Strains with TALL TREE-LIKE GROWTH');
     console.log('✅ Simplified 3-stage growth: seed → seedling → plant');
@@ -777,27 +778,39 @@
     console.log('🧪 COMPLETE CHEMISTRY LIBRARY:');
     console.log('  • ' + Object.keys(periodicTable).length + ' Periodic Table Elements');
     console.log('  • ' + Object.keys(commonCompounds).length + ' Common Chemical Compounds');
-    console.log('  • ' + Object.keys(chemicalReagents).length + ' Chemical Reagents');
     console.log('  • ' + Object.keys(rawAlkaloids).length + ' Raw Alkaloids & Botanicals');
     console.log('  • ' + Object.keys(precursors).length + ' Precursors');
     console.log('  • ' + Object.keys(intermediates).length + ' Intermediates');
     console.log('  • ' + Object.keys(solutions).length + ' Solutions');
     console.log('  • ' + Object.keys(finalCompounds).length + ' Final Research Compounds');
     console.log('  • ' + Object.keys(vaporElements).length + ' Vapor/Smoke Elements');
-    console.log('  • TOTAL CHEMISTRY: ' + (Object.keys(periodicTable).length + Object.keys(commonCompounds).length + Object.keys(chemicalReagents).length + Object.keys(rawAlkaloids).length + Object.keys(precursors).length + Object.keys(intermediates).length + Object.keys(solutions).length + Object.keys(finalCompounds).length + Object.keys(vaporElements).length) + '+ elements!');
+    console.log('  • ' + Object.keys(botanicalProducts).length + ' Botanical Products');
+    console.log('  • TOTAL: ' + (Object.keys(periodicTable).length + Object.keys(commonCompounds).length + Object.keys(rawAlkaloids).length + Object.keys(precursors).length + Object.keys(intermediates).length + Object.keys(solutions).length + Object.keys(finalCompounds).length + Object.keys(vaporElements).length + Object.keys(botanicalProducts).length) + '+ chemistry elements!');
     console.log('');
     console.log('🔬 INCLUDES:');
-    console.log('  • All metals, metalloids, nonmetals, halogens, noble gases');
+    console.log('  • All major periodic table elements (metals, nonmetals, halogens, noble gases)');
     console.log('  • Salts, oxides, acids, bases, hydrides, peroxides');
-    console.log('  • Nitrates, sulfates, carbonates, chlorides, hydroxides');
+    console.log('  • Nitrates, sulfates, carbonates, chlorides, hydroxides, phosphates');
     console.log('  • Alloys: brass, bronze, steel, stainless steel, pewter');
     console.log('  • Rare earth elements & radioactive actinides');
+    console.log('  • Organic solvents and reagents for chemistry');
+    console.log('  • Plant alkaloids, precursors, intermediates, and final compounds');
     console.log('');
     console.log('🚀 USAGE:');
-    console.log('  1. Place seed_og_kush on soil for tall plants');
-    console.log('  2. Use universal_precursor on soil for ANY element');
-    console.log('  3. Harvest with scissors/knife/blade');
+    console.log('  1. Place seed_og_kush (or any strain seed) on soil for tall plants');
+    console.log('  2. Use plant_nutrients on seedlings to speed growth');
+    console.log('  3. Use universal_precursor on soil to create ANY element randomly');
+    console.log('  4. Harvest mature plants with scissors/knife/blade tools');
+    console.log('  5. Extract with butane/ice_water/ethanol for concentrates');
+    console.log('');
+    console.log('🌳 PLANT GROWTH:');
+    console.log('  • Seeds germinate in soil/wet_soil/mud');
+    console.log('  • Seedlings grow into tall vertical plants');
+    console.log('  • Plants spawn stems below and branches/flowers on sides');
+    console.log('  • Flowers contain THC/CBD and can be extracted');
+    console.log('  • Breaking plants drops seeds and flowers');
     console.log('');
     console.log('🎮 MOD READY WITH 500+ ELEMENTS!');
+    console.log('='.repeat(70));
 
 })();
